@@ -1,0 +1,75 @@
+:root {
+  font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+  color: #33302f;
+  background: #f5f3f1;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --brand-red: #c9151e;
+  --brand-red-dark: #a80f17;
+  --brand-red-bright: #e5222a;
+  --brand-gold: #ffd45b;
+  --brand-orange: #ed7b21;
+  --hero-blush: #fff1ef;
+  --page-warm: #f6f4f2;
+  --line: #ece4df;
+  --muted: #8e8884;
+  --site-width: 1280px;
+  --section-shadow: 0 4px 18px rgb(99 42 35 / 7%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--page-warm);
+}
+
+body {
+  min-width: 1320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--page-warm);
+  color: #33302f;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgb(229 34 42 / 22%);
+  outline-offset: 2px;
+}
+
+.site-container {
+  width: var(--site-width);
+  margin: 0 auto;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (max-width: 1399px) {
+  :root {
+    --site-width: 1240px;
+  }
+}

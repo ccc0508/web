@@ -1,0 +1,26 @@
+{
+  "name": "foshan-rural-assets-homepage-ui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "type-check": "vue-tsc --noEmit",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "element-plus": "^2.10.4",
+    "vue": "^3.5.18",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "@types/node": "^24.1.0",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "sass": "^1.89.2",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.6",
+    "vue-tsc": "^3.0.4"
+  }
+}

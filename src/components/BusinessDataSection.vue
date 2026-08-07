@@ -32,6 +32,23 @@ const props = withDefaults(
 const initialControl = props.tabs[0] ?? props.districts[0]?.label ?? props.categories[0]?.label ?? ''
 const activeControl = ref(initialControl)
 const fullTitle = computed(() => `${props.titleLead}${props.titleRest}`)
+const categoryOffset = ref(0)
+const categoryDirection = ref<'next' | 'previous'>('next')
+const visibleCategoryCount = computed(() => Math.min(7, props.categories.length))
+const canSlideCategories = computed(() => props.categories.length > visibleCategoryCount.value)
+const visibleCategories = computed(() =>
+  Array.from(
+    { length: visibleCategoryCount.value },
+    (_, index) => props.categories[(categoryOffset.value + index) % props.categories.length],
+  ),
+)
+
+const slideCategories = (step: -1 | 1) => {
+  if (!canSlideCategories.value) return
+
+  categoryDirection.value = step === 1 ? 'next' : 'previous'
+  categoryOffset.value = (categoryOffset.value + step + props.categories.length) % props.categories.length
+}
 </script>
 
 <template>
@@ -41,6 +58,7 @@ const fullTitle = computed(() => `${props.titleLead}${props.titleRest}`)
       { 'business-section--categories': categories.length > 0, 'business-section--districts': districts.length > 0 },
     ]"
     :data-active-control="activeControl"
+    :data-category-offset="categoryOffset"
     :data-testid="`business-${sectionId}`"
   >
     <header class="business-section__header">
@@ -73,23 +91,45 @@ const fullTitle = computed(() => `${props.titleLead}${props.titleRest}`)
     </header>
 
     <div v-if="categories.length" class="business-section__categories" :aria-label="`${fullTitle}资产分类`">
-      <button class="business-section__arrow" aria-label="上一组分类" type="button">
+      <button
+        class="business-section__arrow"
+        aria-label="上一组分类"
+        :data-testid="`${sectionId}-category-previous`"
+        :disabled="!canSlideCategories"
+        type="button"
+        @click="slideCategories(-1)"
+      >
         <span aria-hidden="true"></span>
       </button>
+
+      <div class="business-section__category-viewport" aria-live="polite">
+        <Transition :name="`category-${categoryDirection}`" mode="out-in">
+          <div :key="categoryOffset" class="business-section__category-track">
+            <button
+              v-for="category in visibleCategories"
+              :key="category.label"
+              :aria-pressed="activeControl === category.label"
+              class="business-section__category"
+              :data-testid="`${sectionId}-category-${category.label}`"
+              :style="{ '--category-color': category.color }"
+              type="button"
+              @click="activeControl = category.label"
+            >
+              <span class="business-section__bubble" aria-hidden="true">{{ category.glyph }}</span>
+              <em>{{ category.label }}</em>
+            </button>
+          </div>
+        </Transition>
+      </div>
+
       <button
-        v-for="(category, index) in categories"
-        :key="category.label"
-        :aria-pressed="activeControl === category.label"
-        class="business-section__category"
-        :data-testid="`${sectionId}-category-${index}`"
-        :style="{ '--category-color': category.color }"
+        class="business-section__arrow business-section__arrow--next"
+        aria-label="下一组分类"
+        :data-testid="`${sectionId}-category-next`"
+        :disabled="!canSlideCategories"
         type="button"
-        @click="activeControl = category.label"
+        @click="slideCategories(1)"
       >
-        <span class="business-section__bubble" aria-hidden="true">{{ category.glyph }}</span>
-        <em>{{ category.label }}</em>
-      </button>
-      <button class="business-section__arrow business-section__arrow--next" aria-label="下一组分类" type="button">
         <span aria-hidden="true"></span>
       </button>
     </div>
@@ -241,10 +281,22 @@ const fullTitle = computed(() => `${props.titleLead}${props.titleRest}`)
 
   &__categories {
     display: grid;
-    grid-template-columns: 48px repeat(7, minmax(0, 1fr)) 48px;
+    grid-template-columns: 48px minmax(0, 1fr) 48px;
     gap: 10px;
     align-items: start;
     padding: 10px 26px 20px;
+  }
+
+  &__category-viewport {
+    min-width: 0;
+    min-height: 111px;
+    overflow: hidden;
+  }
+
+  &__category-track {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 10px;
   }
 
   &__category {
@@ -287,10 +339,21 @@ const fullTitle = computed(() => `${props.titleLead}${props.titleRest}`)
     height: 43px;
     place-items: center;
     margin-top: 13px;
-    cursor: default;
+    cursor: pointer;
     background: #fff;
     border-radius: 50%;
     box-shadow: 0 5px 17px rgb(55 44 40 / 13%);
+    transition: box-shadow 140ms ease, transform 140ms ease, opacity 140ms ease;
+
+    &:hover:not(:disabled) {
+      box-shadow: 0 7px 20px rgb(55 44 40 / 20%);
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.45;
+    }
 
     span {
       width: 10px;
@@ -303,6 +366,25 @@ const fullTitle = computed(() => `${props.titleLead}${props.titleRest}`)
     &--next span {
       transform: rotate(225deg) translate(1px, -1px);
     }
+  }
+
+  .category-next-enter-active,
+  .category-next-leave-active,
+  .category-previous-enter-active,
+  .category-previous-leave-active {
+    transition: opacity 150ms ease, transform 150ms ease;
+  }
+
+  .category-next-enter-from,
+  .category-previous-leave-to {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+
+  .category-next-leave-to,
+  .category-previous-enter-from {
+    opacity: 0;
+    transform: translateX(-28px);
   }
 
   &__districts {

@@ -38,3 +38,5 @@
 - [x] 6.2 Replace the two-column cards with four independent rows for 交易动态, 临期资产, 三资公开, and 农村工程和采购 in the required order and configure each row from the supplied reference screenshots.
 - [x] 6.3 Extend automated checks for full-width sequential layout, required tabs and districts, local state changes, and one empty state per business section.
 - [x] 6.4 Run type checking, production build, interaction tests, and 1920px/1440px/1366px visual QA, then resolve spacing, typography, or overflow issues.
+- [x] 6.5 Implement seven-item circular category carousels for 交易动态 and 临期资产, including the additional reference categories and functional previous/next arrows that advance one item and wrap.
+- [x] 6.6 Add carousel interaction and wraparound checks, then run type checking, production build, browser tests, and desktop visual QA before committing and pushing.

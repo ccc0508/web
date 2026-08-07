@@ -103,3 +103,46 @@ test('business sections are full-width sequential rows with local controls', asy
   await disclosure.getByRole('button', { name: '顺德区', exact: true }).click()
   await expect(disclosure).toHaveAttribute('data-active-control', '顺德区')
 })
+
+test('transaction and expiring category carousels move one item and wrap', async ({ page }) => {
+  await page.goto('/')
+
+  const transaction = page.getByTestId('business-transaction')
+  await expect(transaction).toHaveAttribute('data-category-offset', '0')
+  await expect(transaction.getByText('商铺', { exact: true })).toBeVisible()
+  await expect(transaction.getByText('商住楼', { exact: true })).toBeVisible()
+  await expect(transaction.getByText('其他物业', { exact: true })).toHaveCount(0)
+
+  await transaction.getByTestId('transaction-category-next').click()
+  await expect(transaction).toHaveAttribute('data-category-offset', '1')
+  await expect(transaction.getByText('商铺', { exact: true })).toHaveCount(0)
+  await expect(transaction.getByText('厂房', { exact: true })).toBeVisible()
+  await expect(transaction.getByText('其他物业', { exact: true })).toBeVisible()
+
+  await transaction.getByTestId('transaction-category-previous').click()
+  await expect(transaction).toHaveAttribute('data-category-offset', '0')
+  await expect(transaction.getByText('商铺', { exact: true })).toBeVisible()
+
+  await transaction.getByTestId('transaction-category-previous').click()
+  await expect(transaction).toHaveAttribute('data-category-offset', '9')
+  await expect(transaction.getByText('耕地', { exact: true })).toBeVisible()
+  await expect(transaction.getByText('商铺', { exact: true })).toBeVisible()
+  await expect(transaction.getByText('商住楼', { exact: true })).toHaveCount(0)
+  await expect(transaction.getByText('暂无公开数据', { exact: true })).toHaveCount(1)
+
+  const expiring = page.getByTestId('business-expiring')
+  await expect(expiring).toHaveAttribute('data-category-offset', '0')
+  await expect(expiring.getByText('林地', { exact: true })).toBeVisible()
+  await expect(expiring.getByText('其他土地资产', { exact: true })).toHaveCount(0)
+
+  await expiring.getByTestId('expiring-category-next').click()
+  await expect(expiring).toHaveAttribute('data-category-offset', '1')
+  await expect(expiring.getByText('林地', { exact: true })).toHaveCount(0)
+  await expect(expiring.getByText('草地', { exact: true })).toBeVisible()
+  await expect(expiring.getByText('其他土地资产', { exact: true })).toBeVisible()
+
+  await expiring.getByTestId('expiring-category-previous').click()
+  await expect(expiring).toHaveAttribute('data-category-offset', '0')
+  await expect(expiring.getByText('林地', { exact: true })).toBeVisible()
+  await expect(expiring.getByText('暂无公开数据', { exact: true })).toHaveCount(1)
+})

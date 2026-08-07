@@ -90,7 +90,7 @@ Below the first showcase row, use an approximately 58/42 split: a tabbed informa
 
 ### 11. Model the four business modules as independent full-width rows
 
-Replace the two-column data-card grid with a reusable `BusinessDataSection` component rendered four times in this order: 交易动态, 临期资产, 三资公开, 农村工程和采购. Each row uses a left red rule, a large split red/black title, a thin warm gradient underline, reference-matched local tabs or district entries, and a centered `EmptyState`. Transaction and expiring-asset rows also include project-owned circular category symbols and labels that reproduce the original information architecture without copying icon assets or importing business data. Local tab or district selection changes only active appearance.
+Replace the two-column data-card grid with a reusable `BusinessDataSection` component rendered four times in this order: 交易动态, 临期资产, 三资公开, 农村工程和采购. Each row uses a left red rule, a large split red/black title, a thin warm gradient underline, reference-matched local tabs or district entries, and a centered `EmptyState`. Transaction and expiring-asset rows also include project-owned circular category symbols and labels that reproduce the original information architecture without copying icon assets or importing business data. Their previous/next arrows control a seven-item circular window backed by local component state, advancing one category at a time with a short directional transition and wrapping at both ends. Local tab, district, and category selection changes only active appearance.
 
 ## Risks / Trade-offs
 

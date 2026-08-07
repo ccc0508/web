@@ -14,6 +14,9 @@ const businessSections = [
     titleRest: '动态',
     tabs: ['交易公告', '结果公示', '成交公告', '其他公告'],
     categories: [
+      { label: '商铺', glyph: '铺', color: '#ff6f4c' },
+      { label: '厂房', glyph: '厂', color: '#3bd950' },
+      { label: '仓库', glyph: '仓', color: '#ae56e6' },
       { label: '办公楼', glyph: '楼', color: '#22c874' },
       { label: '市场', glyph: '市', color: '#25aae8' },
       { label: '临时建筑', glyph: '建', color: '#ff9e26' },
@@ -36,6 +39,7 @@ const businessSections = [
       { label: '其他农用地', glyph: '用', color: '#18bd62' },
       { label: '未利用地', glyph: '未', color: '#ff9b21' },
       { label: '“四荒”地', glyph: '荒', color: '#f5ce45' },
+      { label: '其他土地资产', glyph: '土', color: '#20cad3' },
     ],
   },
   {

@@ -89,6 +89,13 @@ The homepage SHALL show the exact empty-state text “暂无公开数据” in t
 - **WHEN** a visitor activates a tab or district entry in one of the four rows
 - **THEN** only the local active styling changes, the four rows retain their order, and no data request or navigation occurs
 
+### Requirement: Circular category carousels
+The 交易动态 and 临期资产 category controls SHALL behave as local circular carousels. Each carousel SHALL show seven category entries at a time, provide previous and next arrow buttons, move by one entry per activation, and wrap continuously at either end. 交易动态 SHALL include 商铺, 厂房, 仓库, 办公楼, 市场, 临时建筑, 商住楼, 其他物业, 其他固定资产, and 耕地. 临期资产 SHALL include 林地, 草地, 农田水利设施用地（沟渠）, 养殖水面(坑塘水面), 其他农用地, 未利用地, “四荒”地, and 其他土地资产.
+
+#### Scenario: Visitor advances a category carousel
+- **WHEN** a visitor activates the next or previous arrow in 交易动态 or 临期资产
+- **THEN** the visible seven-entry window moves by one item in the requested direction, wraps when necessary, and does not change the section's “暂无公开数据” state or make a network request
+
 ### Requirement: Footer block omission
 The homepage SHALL omit the entire bottom block containing 关于我们, 监督投诉, organizer information, filing information, technical-support information, and related footer content.
 

@@ -77,7 +77,7 @@ const activeTab = ref(tabs[0])
       color: #282421;
       cursor: pointer;
       background: #f0f1f3;
-      font-size: 16px;
+      font-size: 19px;
       white-space: nowrap;
       transition: color 140ms ease, background 140ms ease;
 
@@ -92,7 +92,7 @@ const activeTab = ref(tabs[0])
   &__more {
     margin-left: auto;
     color: #8d8783;
-    font-size: 13px;
+    font-size: 16px;
     white-space: nowrap;
   }
 
@@ -193,7 +193,7 @@ const activeTab = ref(tabs[0])
 
       button {
         padding-inline: 15px;
-        font-size: 15px;
+        font-size: 18px;
       }
     }
 

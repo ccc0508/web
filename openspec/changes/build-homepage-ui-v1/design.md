@@ -86,7 +86,7 @@ Use Playwright for a homepage smoke test, inert-navigation checks, the video-mes
 
 ### 10. Match the reference information/video composition with local placeholders
 
-Below the first showcase row, use an approximately 58/42 split: a tabbed information panel on the left and the 16:9 video placeholder on the right. The five tabs are 工作动态, 通知公告, 行业资讯, 警示曝光, and 帮扶协作, with the first active by default. Selecting a tab updates only local active state. The content body combines a gray 4:3 lead-media placeholder, neutral title/summary bars, and compact placeholder list rows so its density follows the reference without inventing article text, dates, or business records.
+Below the first showcase row, use an approximately 58/42 split: a tabbed information panel on the left and the 16:9 video placeholder on the right. The five tabs are 工作动态, 通知公告, 行业资讯, 警示曝光, and 帮扶协作, with the first active by default. Selecting a tab updates only local active state. The tab labels use a reference-like prominent desktop size of approximately 18–19px while remaining on one line at 1366px. The content body combines a gray 4:3 lead-media placeholder, neutral title/summary bars, and compact placeholder list rows so its density follows the reference without inventing article text, dates, or business records.
 
 ## Risks / Trade-offs
 

@@ -30,3 +30,4 @@
 - [x] 5.2 Replace the existing feature row with a left-side tabbed information panel for 工作动态, 通知公告, 行业资讯, 警示曝光, and 帮扶协作 using gray placeholder media, with the video placeholder aligned on the right.
 - [x] 5.3 Update automated checks to assert the missing convenience-service block, five information labels, local tab switching, and left-information/right-video ordering.
 - [x] 5.4 Run type checking, production build, interaction tests, and desktop visual QA, then resolve layout or regression issues.
+- [x] 5.5 Increase the five information-tab labels and the more-link typography to a reference-like desktop size, then verify they remain on one line at 1366px and pass the existing checks.

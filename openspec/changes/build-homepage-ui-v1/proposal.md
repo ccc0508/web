@@ -10,6 +10,8 @@ The project currently has no application implementation, while the first deliver
 - Keep all non-home navigation items visually present but inert; clicking them must not navigate or change the page.
 - Replace the original Foshan map navigation with a static, non-interactive Guangdong province map presentation.
 - Use `D:\pictures\12.jpg` as the homepage carousel image placeholder.
+- Remove the compact "便民服务" column so the first showcase row contains only the Guangdong map and carousel.
+- Recreate the reference information-and-video row below the showcase: the left side contains 工作动态, 通知公告, 行业资讯, 警示曝光, and 帮扶协作 tabs with gray placeholder content, while the video placeholder occupies the right side.
 - Render a video-cover placeholder with a play button; clicking it shows the message "视频暂未接入".
 - Use neutral gray placeholders that preserve the reference site's image aspect ratios wherever other content images would appear.
 - Show "暂无公开数据" beneath the transaction dynamics, expiring assets, three-assets disclosure, rural engineering and procurement, and website navigation sections.

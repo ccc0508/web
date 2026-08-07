@@ -57,8 +57,8 @@ The page will be composed from focused components:
 - Top welcome/date strip.
 - Branded hero and search controls.
 - Primary navigation.
-- First showcase row with Guangdong map navigation, carousel, and compact utility placeholder.
-- Video placeholder feature area.
+- First showcase row with Guangdong map navigation and carousel only; the compact convenience-service column is intentionally removed.
+- A reference-aligned content row with a five-label tabbed information panel on the left and the video placeholder on the right.
 - Empty-data modules for 交易动态, 临期资产, 三资公开, 农村工程和采购, and 网站导航.
 - Floating back-to-top control if needed to match the reference vertical affordance.
 
@@ -83,6 +83,10 @@ The video area uses a gray 16:9 cover placeholder, centered circular play button
 ### 9. Validate fidelity with stable browser screenshots
 
 Use Playwright for a homepage smoke test, inert-navigation checks, the video-message assertion, footer-omission assertion, empty-state assertions, and reference-sized screenshots. The visual baseline must be generated in one stable browser/OS environment to avoid font and rendering drift.
+
+### 10. Match the reference information/video composition with local placeholders
+
+Below the first showcase row, use an approximately 58/42 split: a tabbed information panel on the left and the 16:9 video placeholder on the right. The five tabs are 工作动态, 通知公告, 行业资讯, 警示曝光, and 帮扶协作, with the first active by default. Selecting a tab updates only local active state. The content body combines a gray 4:3 lead-media placeholder, neutral title/summary bars, and compact placeholder list rows so its density follows the reference without inventing article text, dates, or business records.
 
 ## Risks / Trade-offs
 

@@ -39,6 +39,24 @@ The homepage carousel SHALL use the user-supplied image `D:\pictures\12.jpg` as 
 - **WHEN** a visitor views the top content area
 - **THEN** the supplied image is displayed as the carousel slide without distortion and uses cover-style cropping where necessary
 
+### Requirement: Two-column showcase without convenience-service panel
+The first homepage showcase row SHALL contain only the Guangdong map-navigation panel and carousel panel. The homepage SHALL NOT render the 便民服务 heading, QR placeholder, 信息公开 shortcut, or 办事指南 shortcut.
+
+#### Scenario: First showcase row is displayed
+- **WHEN** a visitor views the area immediately below the primary navigation
+- **THEN** the map occupies the left column, the carousel fills the remaining right column, and no convenience-service column is present
+
+### Requirement: Reference-aligned information and video row
+The row immediately below the map and carousel SHALL place a tabbed information panel on the left and the video placeholder on the right. The information panel SHALL expose the five labels 工作动态, 通知公告, 行业资讯, 警示曝光, and 帮扶协作 in that order, with 工作动态 active initially, and SHALL use neutral gray placeholders instead of imported article media or business content.
+
+#### Scenario: Information row is displayed
+- **WHEN** a visitor views the row below the showcase
+- **THEN** all five information labels are visible on the left, gray placeholder content is shown beneath the active label, and the video placeholder is aligned to the right
+
+#### Scenario: Visitor selects an information label
+- **WHEN** a visitor activates any of the five information labels
+- **THEN** the selected label receives the active treatment and the panel continues to show only local gray placeholder content without requesting data
+
 ### Requirement: Video placeholder interaction
 The homepage SHALL provide a video-cover placeholder with a centered play button and SHALL show the exact message “视频暂未接入” when activated.
 

@@ -23,3 +23,10 @@
 - [x] 4.1 Add automated homepage checks for inert navigation, empty-data text, the video message, excluded footer content, and absence of reference-domain requests.
 - [x] 4.2 Run type checking and the production build and resolve all errors and warnings relevant to the homepage.
 - [x] 4.3 Render and visually inspect the homepage at 1920×1080, 1440×900, and 1366×768, then adjust typography, colors, cropping, spacing, and alignment against the reference.
+
+## 5. Reference Layout Refinement
+
+- [x] 5.1 Remove the convenience-service column and resize the first showcase row to a two-column Guangdong map and carousel composition.
+- [x] 5.2 Replace the existing feature row with a left-side tabbed information panel for 工作动态, 通知公告, 行业资讯, 警示曝光, and 帮扶协作 using gray placeholder media, with the video placeholder aligned on the right.
+- [x] 5.3 Update automated checks to assert the missing convenience-service block, five information labels, local tab switching, and left-information/right-video ordering.
+- [x] 5.4 Run type checking, production build, interaction tests, and desktop visual QA, then resolve layout or regression issues.

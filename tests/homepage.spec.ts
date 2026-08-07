@@ -16,6 +16,10 @@ test('homepage renders all required static content without reference-site reques
   await expect(page.getByText('暂无公开数据', { exact: true })).toHaveCount(5)
   await expect(page.getByText('关于我们', { exact: true })).toHaveCount(0)
   await expect(page.getByText('监督投诉', { exact: true })).toHaveCount(0)
+  await expect(page.getByText('便民服务', { exact: true })).toHaveCount(0)
+  await expect(page.getByText('二维码占位', { exact: true })).toHaveCount(0)
+  await expect(page.getByText('信息公开', { exact: true })).toHaveCount(0)
+  await expect(page.getByText('办事指南', { exact: true })).toHaveCount(0)
 
   await page.getByLabel('搜索关键词').fill('测试关键词')
   await page.getByRole('button', { name: '搜索', exact: true }).click()
@@ -39,4 +43,26 @@ test('video placeholder shows the exact unavailable message', async ({ page }) =
   await page.goto('/')
   await page.getByTestId('video-play').click()
   await expect(page.locator('.el-message__content')).toHaveText('视频暂未接入')
+})
+
+test('information tabs switch locally and remain to the left of the video', async ({ page }) => {
+  await page.goto('/')
+
+  const labels = ['工作动态', '通知公告', '行业资讯', '警示曝光', '帮扶协作']
+  for (const label of labels) {
+    await expect(page.getByRole('tab', { name: label, exact: true })).toBeVisible()
+  }
+
+  const informationPanel = page.getByTestId('information-panel')
+  await expect(informationPanel).toHaveAttribute('data-active-tab', '工作动态')
+  await page.getByRole('tab', { name: '行业资讯', exact: true }).click()
+  await expect(informationPanel).toHaveAttribute('data-active-tab', '行业资讯')
+  await expect(page.getByRole('img', { name: '行业资讯图片占位' })).toBeVisible()
+
+  const informationBox = await informationPanel.boundingBox()
+  const videoBox = await page.getByTestId('video-panel').boundingBox()
+  expect(informationBox).not.toBeNull()
+  expect(videoBox).not.toBeNull()
+  expect(informationBox!.x).toBeLessThan(videoBox!.x)
+  expect(Math.abs(informationBox!.y - videoBox!.y)).toBeLessThan(2)
 })

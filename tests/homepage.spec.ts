@@ -66,3 +66,40 @@ test('information tabs switch locally and remain to the left of the video', asyn
   expect(informationBox!.x).toBeLessThan(videoBox!.x)
   expect(Math.abs(informationBox!.y - videoBox!.y)).toBeLessThan(2)
 })
+
+test('business sections are full-width sequential rows with local controls', async ({ page }) => {
+  await page.goto('/')
+
+  const ids = ['transaction', 'expiring', 'disclosure', 'projects']
+  const sections = ids.map((id) => page.getByTestId(`business-${id}`))
+  const boxes = await Promise.all(sections.map((section) => section.boundingBox()))
+
+  for (let index = 0; index < sections.length; index += 1) {
+    await expect(sections[index].getByText('暂无公开数据', { exact: true })).toHaveCount(1)
+    expect(boxes[index]).not.toBeNull()
+    if (index > 0) {
+      expect(Math.abs(boxes[index]!.x - boxes[0]!.x)).toBeLessThan(2)
+      expect(Math.abs(boxes[index]!.width - boxes[0]!.width)).toBeLessThan(2)
+      expect(boxes[index]!.y).toBeGreaterThan(boxes[index - 1]!.y + boxes[index - 1]!.height)
+    }
+  }
+
+  const transaction = sections[0]
+  for (const label of ['交易公告', '结果公示', '成交公告', '其他公告']) {
+    await expect(transaction.getByRole('tab', { name: label, exact: true })).toBeVisible()
+  }
+  await transaction.getByRole('tab', { name: '结果公示', exact: true }).click()
+  await expect(transaction).toHaveAttribute('data-active-control', '结果公示')
+
+  const expiring = sections[1]
+  for (const label of ['一年内到期', '6个月内到期', '3个月内到期', '1个月内到期']) {
+    await expect(expiring.getByRole('tab', { name: label, exact: true })).toBeVisible()
+  }
+
+  const disclosure = sections[2]
+  for (const label of ['禅城区', '南海区', '顺德区', '高明区', '三水区']) {
+    await expect(disclosure.getByRole('button', { name: label, exact: true })).toBeVisible()
+  }
+  await disclosure.getByRole('button', { name: '顺德区', exact: true }).click()
+  await expect(disclosure).toHaveAttribute('data-active-control', '顺德区')
+})

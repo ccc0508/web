@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import BusinessDataSection from '../components/BusinessDataSection.vue'
 import EmptyState from '../components/EmptyState.vue'
 import InformationTabs from '../components/InformationTabs.vue'
 import PrimaryNav from '../components/PrimaryNav.vue'
@@ -6,11 +7,55 @@ import SectionHeader from '../components/SectionHeader.vue'
 import SiteHeader from '../components/SiteHeader.vue'
 import VideoPlaceholder from '../components/VideoPlaceholder.vue'
 
-const emptySections = [
-  { title: '交易动态', eyebrow: 'Transaction updates' },
-  { title: '临期资产', eyebrow: 'Expiring assets' },
-  { title: '三资公开', eyebrow: 'Collective assets' },
-  { title: '农村工程和采购', eyebrow: 'Projects & procurement' },
+const businessSections = [
+  {
+    sectionId: 'transaction',
+    titleLead: '交易',
+    titleRest: '动态',
+    tabs: ['交易公告', '结果公示', '成交公告', '其他公告'],
+    categories: [
+      { label: '办公楼', glyph: '楼', color: '#22c874' },
+      { label: '市场', glyph: '市', color: '#25aae8' },
+      { label: '临时建筑', glyph: '建', color: '#ff9e26' },
+      { label: '商住楼', glyph: '商', color: '#ffd85a' },
+      { label: '其他物业', glyph: '物', color: '#1fcbd3' },
+      { label: '其他固定资产', glyph: '资', color: '#ff7251' },
+      { label: '耕地', glyph: '地', color: '#ff9d20' },
+    ],
+  },
+  {
+    sectionId: 'expiring',
+    titleLead: '临期',
+    titleRest: '资产',
+    tabs: ['一年内到期', '6个月内到期', '3个月内到期', '1个月内到期'],
+    categories: [
+      { label: '林地', glyph: '林', color: '#ff6d4a' },
+      { label: '草地', glyph: '草', color: '#38d64a' },
+      { label: '农田水利设施用地（沟渠）', glyph: '农', color: '#b95be7' },
+      { label: '养殖水面(坑塘水面)', glyph: '水', color: '#22a7e6' },
+      { label: '其他农用地', glyph: '用', color: '#18bd62' },
+      { label: '未利用地', glyph: '未', color: '#ff9b21' },
+      { label: '“四荒”地', glyph: '荒', color: '#f5ce45' },
+    ],
+  },
+  {
+    sectionId: 'disclosure',
+    titleLead: '三资',
+    titleRest: '公开',
+    districts: [
+      { label: '禅城区', color: '#f3b3b4' },
+      { label: '南海区', color: '#f1b8ae' },
+      { label: '顺德区', color: '#9ad6ae' },
+      { label: '高明区', color: '#efadc1' },
+      { label: '三水区', color: '#f5d66f' },
+    ],
+  },
+  {
+    sectionId: 'projects',
+    titleLead: '农村',
+    titleRest: '工程和采购',
+    tabs: ['交易公告', '结果公示', '成交公告', '其他公告'],
+  },
 ]
 
 const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -82,11 +127,12 @@ const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
           </article>
         </section>
 
-        <section class="data-grid" aria-label="公开数据模块">
-          <article v-for="section in emptySections" :key="section.title" class="portal-card data-card">
-            <SectionHeader :eyebrow="section.eyebrow" :title="section.title" />
-            <EmptyState />
-          </article>
+        <section class="business-sections" aria-label="公开数据模块">
+          <BusinessDataSection
+            v-for="section in businessSections"
+            :key="section.sectionId"
+            v-bind="section"
+          />
         </section>
 
         <section class="portal-card website-nav" aria-label="网站导航">
@@ -317,15 +363,8 @@ const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 }
 
-.data-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.data-card {
-  min-height: 270px;
+.business-sections {
+  display: block;
 }
 
 .website-nav {

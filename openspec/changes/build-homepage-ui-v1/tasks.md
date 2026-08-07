@@ -31,3 +31,10 @@
 - [x] 5.3 Update automated checks to assert the missing convenience-service block, five information labels, local tab switching, and left-information/right-video ordering.
 - [x] 5.4 Run type checking, production build, interaction tests, and desktop visual QA, then resolve layout or regression issues.
 - [x] 5.5 Increase the five information-tab labels and the more-link typography to a reference-like desktop size, then verify they remain on one line at 1366px and pass the existing checks.
+
+## 6. Full-Width Business Section Refinement
+
+- [x] 6.1 Create a reusable full-width business-section component with reference-style split titles, local tabs, more-link treatment, optional category or district controls, and a centered “暂无公开数据” state.
+- [x] 6.2 Replace the two-column cards with four independent rows for 交易动态, 临期资产, 三资公开, and 农村工程和采购 in the required order and configure each row from the supplied reference screenshots.
+- [x] 6.3 Extend automated checks for full-width sequential layout, required tabs and districts, local state changes, and one empty state per business section.
+- [x] 6.4 Run type checking, production build, interaction tests, and 1920px/1440px/1366px visual QA, then resolve spacing, typography, or overflow issues.

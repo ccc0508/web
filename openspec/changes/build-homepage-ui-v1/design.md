@@ -59,7 +59,7 @@ The page will be composed from focused components:
 - Primary navigation.
 - First showcase row with Guangdong map navigation and carousel only; the compact convenience-service column is intentionally removed.
 - A reference-aligned content row with a five-label tabbed information panel on the left and the video placeholder on the right.
-- Empty-data modules for 交易动态, 临期资产, 三资公开, 农村工程和采购, and 网站导航.
+- Four independent full-width business rows for 交易动态, 临期资产, 三资公开, and 农村工程和采购, followed by the full-width 网站导航 empty-data module.
 - Floating back-to-top control if needed to match the reference vertical affordance.
 
 Shared `SectionHeader`, `EmptyState`, `GrayMediaPlaceholder`, and `VideoPlaceholder` components will keep states visually consistent.
@@ -87,6 +87,10 @@ Use Playwright for a homepage smoke test, inert-navigation checks, the video-mes
 ### 10. Match the reference information/video composition with local placeholders
 
 Below the first showcase row, use an approximately 58/42 split: a tabbed information panel on the left and the 16:9 video placeholder on the right. The five tabs are 工作动态, 通知公告, 行业资讯, 警示曝光, and 帮扶协作, with the first active by default. Selecting a tab updates only local active state. The tab labels use a reference-like prominent desktop size of approximately 18–19px while remaining on one line at 1366px. The content body combines a gray 4:3 lead-media placeholder, neutral title/summary bars, and compact placeholder list rows so its density follows the reference without inventing article text, dates, or business records.
+
+### 11. Model the four business modules as independent full-width rows
+
+Replace the two-column data-card grid with a reusable `BusinessDataSection` component rendered four times in this order: 交易动态, 临期资产, 三资公开, 农村工程和采购. Each row uses a left red rule, a large split red/black title, a thin warm gradient underline, reference-matched local tabs or district entries, and a centered `EmptyState`. Transaction and expiring-asset rows also include project-owned circular category symbols and labels that reproduce the original information architecture without copying icon assets or importing business data. Local tab or district selection changes only active appearance.
 
 ## Risks / Trade-offs
 

@@ -14,6 +14,7 @@ The project currently has no application implementation, while the first deliver
 - Recreate the reference information-and-video row below the showcase: the left side contains 工作动态, 通知公告, 行业资讯, 警示曝光, and 帮扶协作 tabs with gray placeholder content, while the video placeholder occupies the right side.
 - Render a video-cover placeholder with a play button; clicking it shows the message "视频暂未接入".
 - Use neutral gray placeholders that preserve the reference site's image aspect ratios wherever other content images would appear.
+- Rebuild 交易动态, 临期资产, 三资公开, and 农村工程和采购 as four separate full-width rows with the reference site's split red/black titles, category or district controls, tabs, and more-link treatment.
 - Show "暂无公开数据" beneath the transaction dynamics, expiring assets, three-assets disclosure, rural engineering and procurement, and website navigation sections.
 - Do not connect to the reference site's APIs or import its articles, rental listings, video, images, files, map tiles, coordinates, or other data.
 

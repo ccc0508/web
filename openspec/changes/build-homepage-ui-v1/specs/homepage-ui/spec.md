@@ -78,6 +78,17 @@ The homepage SHALL show the exact empty-state text “暂无公开数据” in t
 - **WHEN** the specified five homepage sections render
 - **THEN** each section displays “暂无公开数据” in a visually centered empty state consistent with the surrounding design
 
+### Requirement: Reference-aligned full-width business sections
+交易动态, 临期资产, 三资公开, and 农村工程和采购 SHALL each render as a separate full-width row in that vertical order. Every row SHALL reproduce the reference split-title treatment with a red leading phrase and black trailing phrase. 交易动态 and 农村工程和采购 SHALL expose 交易公告, 结果公示, 成交公告, and 其他公告 tabs; 临期资产 SHALL expose 一年内到期, 6个月内到期, 3个月内到期, and 1个月内到期 tabs; 三资公开 SHALL expose 禅城区, 南海区, 顺德区, 高明区, and 三水区 district entries. All controls SHALL use local state only, and the business-data area beneath the structural controls SHALL display “暂无公开数据”.
+
+#### Scenario: Business sections are displayed
+- **WHEN** a visitor scrolls below the information-and-video row
+- **THEN** the four business modules appear as four independent full-width rows with reference-like headings and controls, followed by their own centered “暂无公开数据” state
+
+#### Scenario: Visitor selects a business-section control
+- **WHEN** a visitor activates a tab or district entry in one of the four rows
+- **THEN** only the local active styling changes, the four rows retain their order, and no data request or navigation occurs
+
 ### Requirement: Footer block omission
 The homepage SHALL omit the entire bottom block containing 关于我们, 监督投诉, organizer information, filing information, technical-support information, and related footer content.
 

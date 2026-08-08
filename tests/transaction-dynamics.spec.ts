@@ -21,6 +21,8 @@ const tradeModeOptions = [
 ]
 
 const announcementOptions = ['交易公告', '结果公示', '成交公告', '终止公告', '失败公告']
+const amountOptions = ['不限', '0-1999', '2000-4999', '5000-9999', '10000以上', '自定义金额']
+const publishDateOptions = ['不限', '近一周内', '近两周内', '近一个月内', '自定义日期']
 
 const group = (page: Page, label: string) => page.getByRole('radiogroup', { name: label, exact: true })
 
@@ -107,7 +109,7 @@ test('filters stay local, keep towns complete, and reset to screenshot defaults'
   await expect(page).toHaveURL(originalUrl)
 })
 
-test('more options stays collapsed and all interactions leave the result unchanged', async ({ page }) => {
+test('more options expands local filters, preserves state, and resets without side effects', async ({ page }) => {
   await page.goto('/transaction-dynamics')
   const requestsAfterReady: string[] = []
   page.on('request', (request) => requestsAfterReady.push(request.url()))
@@ -123,8 +125,48 @@ test('more options stays collapsed and all interactions leave the result unchang
   await expect(moreButton).toHaveAttribute('aria-expanded', 'false')
   await expect(panel.locator('input, select, textarea')).toHaveCount(0)
   await moreButton.click()
+  await expect(moreButton).toHaveAttribute('aria-expanded', 'true')
+  await expect(page.getByTestId('transaction-additional-filters')).toBeVisible()
+  await expectOptions(page, '成交金额', amountOptions)
+  await expectOptions(page, '发布日期', publishDateOptions)
+  await expectSelected(page, '成交金额', '不限')
+  await expectSelected(page, '发布日期', '不限')
+  await expect(page.getByLabel('交易动态关键字')).toBeVisible()
+
+  await page.getByLabel('成交金额下限').fill('1000')
+  await page.getByLabel('成交金额上限').fill('5000')
+  await group(page, '成交金额').getByRole('button', { name: '确定', exact: true }).click()
+  await page.getByLabel('发布开始日期').fill('2026-08-01')
+  await page.getByLabel('发布结束日期').fill('2026-08-09')
+  await group(page, '发布日期').getByRole('button', { name: '确定', exact: true }).click()
+  await page.getByLabel('交易动态关键字').fill('鱼塘')
+  await page.getByRole('group', { name: '关键字' }).getByRole('button', { name: '确定' }).click()
+
+  const conditions = page.getByTestId('transaction-selected-conditions')
+  await expect(conditions.getByText('成交金额：自定义金额（1000 至 5000）', { exact: true })).toBeVisible()
+  await expect(
+    conditions.getByText('发布日期：自定义日期（2026-08-01 至 2026-08-09）', { exact: true }),
+  ).toBeVisible()
+  await expect(conditions.getByText('关键字：鱼塘', { exact: true })).toBeVisible()
+
+  await moreButton.click()
   await expect(moreButton).toHaveAttribute('aria-expanded', 'false')
-  await expect(panel.locator('input, select, textarea')).toHaveCount(0)
+  await expect(page.getByTestId('transaction-additional-filters')).toHaveCount(0)
+  await moreButton.click()
+  await expect(page.getByLabel('成交金额下限')).toHaveValue('1000')
+  await expect(page.getByLabel('发布开始日期')).toHaveValue('2026-08-01')
+  await expect(page.getByLabel('交易动态关键字')).toHaveValue('鱼塘')
+
+  await page.getByRole('button', { name: '全部撤销', exact: true }).click()
+  await expect(moreButton).toHaveAttribute('aria-expanded', 'true')
+  await expectSelected(page, '成交金额', '不限')
+  await expectSelected(page, '发布日期', '不限')
+  await expect(page.getByLabel('成交金额下限')).toHaveValue('')
+  await expect(page.getByLabel('成交金额上限')).toHaveValue('')
+  await expect(page.getByLabel('发布开始日期')).toHaveValue('')
+  await expect(page.getByLabel('发布结束日期')).toHaveValue('')
+  await expect(page.getByLabel('交易动态关键字')).toHaveValue('')
+  await expect(conditions).toHaveText('已选条件：')
   await expect(page).toHaveURL(originalUrl)
   await expect(results.getByText('敬请期待...', { exact: true })).toBeVisible()
   await expect(results.locator('article, img, table, .sort, .pagination')).toHaveCount(0)
@@ -137,15 +179,27 @@ test('transaction dynamics layout has no horizontal overflow at desktop widths',
     await page.setViewportSize({ width, height: 900 })
     await page.goto('/transaction-dynamics')
 
-    const panelBox = await page.getByTestId('transaction-filter-panel').boundingBox()
-    const resultsBox = await page.getByTestId('transaction-dynamics-results').boundingBox()
-    expect(panelBox).not.toBeNull()
-    expect(resultsBox).not.toBeNull()
-    expect(resultsBox!.y).toBeGreaterThan(panelBox!.y + panelBox!.height)
+    const collapsedPanelBox = await page.getByTestId('transaction-filter-panel').boundingBox()
+    const collapsedResultsBox = await page.getByTestId('transaction-dynamics-results').boundingBox()
+    expect(collapsedPanelBox).not.toBeNull()
+    expect(collapsedResultsBox).not.toBeNull()
+    expect(collapsedResultsBox!.y).toBeGreaterThan(collapsedPanelBox!.y + collapsedPanelBox!.height)
     await expect(group(page, '镇街').getByRole('radio', { name: '南山镇', exact: true })).toBeVisible()
     await expect(
       group(page, '资产类别').getByRole('radio', { name: '其他固定资产', exact: true }),
     ).toBeVisible()
+
+    await page.getByRole('button', {
+      name: '更多选项(成交金额、发布日期、关键字)',
+      exact: true,
+    }).click()
+    await expect(page.getByTestId('transaction-additional-filters')).toBeVisible()
+    const expandedPanelBox = await page.getByTestId('transaction-filter-panel').boundingBox()
+    const expandedResultsBox = await page.getByTestId('transaction-dynamics-results').boundingBox()
+    expect(expandedPanelBox).not.toBeNull()
+    expect(expandedResultsBox).not.toBeNull()
+    expect(expandedPanelBox!.height).toBeGreaterThan(collapsedPanelBox!.height)
+    expect(expandedResultsBox!.y).toBeGreaterThan(expandedPanelBox!.y + expandedPanelBox!.height)
 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)
     expect(overflow).toBe(false)

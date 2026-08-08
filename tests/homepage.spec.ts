@@ -63,6 +63,46 @@ test('implemented main navigation opens local pages while unfinished items remai
   await expect(page).toHaveURL('http://127.0.0.1:4173/trade-hall')
 })
 
+test('ordinary main navigation geometry stays stable across local routes', async ({ page }) => {
+  const routes = ['/', '/comprehensive-info', '/transaction-dynamics']
+  const snapshots: Array<{
+    ordinary: Array<{ width: number; fontSize: string; fontWeight: string }>
+    hall: { width: number; fontSize: string; fontWeight: string }
+  }> = []
+
+  for (const route of routes) {
+    await page.goto(route)
+    snapshots.push(
+      await page.evaluate(() => {
+        const readItem = (element: Element) => {
+          const style = getComputedStyle(element)
+          return {
+            width: element.getBoundingClientRect().width,
+            fontSize: style.fontSize,
+            fontWeight: style.fontWeight,
+          }
+        }
+
+        const ordinary = Array.from({ length: 9 }, (_, index) => {
+          const item = document.querySelector(`[data-testid="nav-${index}"]`)
+          if (!item) throw new Error(`Missing nav-${index}`)
+          return readItem(item)
+        })
+        const hall = document.querySelector('[data-testid="nav-9"]')
+        if (!hall) throw new Error('Missing trade hall navigation')
+
+        return { ordinary, hall: readItem(hall) }
+      }),
+    )
+  }
+
+  expect(snapshots[1]).toEqual(snapshots[0])
+  expect(snapshots[2]).toEqual(snapshots[0])
+  const ordinaryWidths = snapshots[0].ordinary.map((item) => item.width)
+  expect(Math.max(...ordinaryWidths) - Math.min(...ordinaryWidths)).toBeLessThan(1)
+  expect(snapshots[0].hall.width).toBe(148)
+})
+
 test('video placeholder shows the exact unavailable message', async ({ page }) => {
   await page.goto('/')
   await page.getByTestId('video-play').click()

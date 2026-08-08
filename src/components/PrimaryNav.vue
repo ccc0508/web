@@ -101,7 +101,6 @@ const handleNavigation = (item: PrimaryNavigationItem) => {
     }
 
     &--active {
-      flex: 0 0 92px;
       color: #bd1119;
       background: linear-gradient(180deg, #ffdd6d, #ffc83c);
       box-shadow: inset 0 -4px 0 #eea51d;

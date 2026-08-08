@@ -32,13 +32,23 @@ test('homepage renders all required static content without reference-site reques
   await expect(page).toHaveURL('http://127.0.0.1:4173/')
 })
 
-test('trade hall navigation opens the local page while other non-home items remain inert', async ({ page }) => {
+test('implemented main navigation opens local pages while unfinished items remain inert', async ({ page }) => {
   await page.goto('/')
-  const originalUrl = page.url()
 
-  for (let index = 1; index <= 8; index += 1) {
+  await page.getByTestId('nav-1').click()
+  await expect(page).toHaveURL('http://127.0.0.1:4173/comprehensive-info')
+  await expect(page.getByTestId('nav-1')).toHaveAttribute('aria-current', 'page')
+  await expect(page.getByTestId('nav-0')).not.toHaveAttribute('aria-current')
+
+  await page.getByTestId('nav-0').click()
+  await expect(page).toHaveURL('http://127.0.0.1:4173/')
+  await expect(page.getByTestId('nav-0')).toHaveAttribute('aria-current', 'page')
+
+  const homepageUrl = page.url()
+
+  for (let index = 2; index <= 8; index += 1) {
     await page.getByTestId(`nav-${index}`).click()
-    await expect(page).toHaveURL(originalUrl)
+    await expect(page).toHaveURL(homepageUrl)
   }
 
   await page.getByTestId('nav-9').click()

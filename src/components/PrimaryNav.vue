@@ -1,24 +1,32 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter, type RouteRecordNameGeneric } from 'vue-router'
 
+interface PrimaryNavigationItem {
+  label: string
+  routeName?: RouteRecordNameGeneric
+}
+
+const route = useRoute()
 const router = useRouter()
 
-const navigation = [
-  '首页',
-  '综合信息',
-  '交易动态',
-  '临期资产',
-  '三资公开',
-  '农村工程和采购',
-  '村域招商',
-  '金融超市',
-  '警示名单',
-  '交易大厅',
+const navigation: PrimaryNavigationItem[] = [
+  { label: '首页', routeName: 'home' },
+  { label: '综合信息', routeName: 'comprehensive-info' },
+  { label: '交易动态' },
+  { label: '临期资产' },
+  { label: '三资公开' },
+  { label: '农村工程和采购' },
+  { label: '村域招商' },
+  { label: '金融超市' },
+  { label: '警示名单' },
+  { label: '交易大厅', routeName: 'trade-hall' },
 ]
 
-const handleNavigation = (label: string) => {
-  if (label === '交易大厅') {
-    void router.push({ name: 'trade-hall' })
+const isActive = (item: PrimaryNavigationItem) => item.routeName === route.name
+
+const handleNavigation = (item: PrimaryNavigationItem) => {
+  if (item.routeName) {
+    void router.push({ name: item.routeName })
   }
 }
 </script>
@@ -27,19 +35,23 @@ const handleNavigation = (label: string) => {
   <nav class="primary-nav" aria-label="主导航">
     <div class="site-container primary-nav__inner">
       <button
-        v-for="(label, index) in navigation"
-        :key="label"
-        :aria-current="index === 0 ? 'page' : undefined"
+        v-for="(item, index) in navigation"
+        :key="item.label"
+        :aria-current="isActive(item) ? 'page' : undefined"
         :class="[
           'primary-nav__item',
-          { 'primary-nav__item--active': index === 0, 'primary-nav__item--hall': label === '交易大厅' },
+          {
+            'primary-nav__item--active': isActive(item) && item.label !== '交易大厅',
+            'primary-nav__item--clickable': Boolean(item.routeName),
+            'primary-nav__item--hall': item.label === '交易大厅',
+          },
         ]"
         :data-testid="`nav-${index}`"
         type="button"
-        @click="handleNavigation(label)"
+        @click="handleNavigation(item)"
       >
-        <span v-if="label === '交易大厅'" class="primary-nav__hall-icon" aria-hidden="true">交</span>
-        {{ label }}
+        <span v-if="item.label === '交易大厅'" class="primary-nav__hall-icon" aria-hidden="true">交</span>
+        {{ item.label }}
       </button>
     </div>
   </nav>
@@ -95,6 +107,10 @@ const handleNavigation = (label: string) => {
       box-shadow: inset 0 -4px 0 #eea51d;
     }
 
+    &--clickable {
+      cursor: pointer;
+    }
+
     &--hall {
       display: flex;
       flex: 0 0 148px;
@@ -103,6 +119,7 @@ const handleNavigation = (label: string) => {
       gap: 9px;
       height: 68px;
       margin-top: -10px;
+      color: #fff;
       background: linear-gradient(180deg, #f49335, #e6681d);
       border-radius: 8px 8px 0 0;
       box-shadow: 0 -4px 12px rgb(153 55 10 / 13%);

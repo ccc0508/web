@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
 const navigation = [
   '首页',
   '综合信息',
@@ -12,7 +16,11 @@ const navigation = [
   '交易大厅',
 ]
 
-const keepHomepage = () => undefined
+const handleNavigation = (label: string) => {
+  if (label === '交易大厅') {
+    void router.push({ name: 'trade-hall' })
+  }
+}
 </script>
 
 <template>
@@ -28,7 +36,7 @@ const keepHomepage = () => undefined
         ]"
         :data-testid="`nav-${index}`"
         type="button"
-        @click="keepHomepage"
+        @click="handleNavigation(label)"
       >
         <span v-if="label === '交易大厅'" class="primary-nav__hall-icon" aria-hidden="true">交</span>
         {{ label }}
@@ -99,6 +107,7 @@ const keepHomepage = () => undefined
       border-radius: 8px 8px 0 0;
       box-shadow: 0 -4px 12px rgb(153 55 10 / 13%);
       font-size: 18px;
+      cursor: pointer;
     }
   }
 

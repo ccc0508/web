@@ -1,8 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+
+type HeaderMode = 'home' | 'trade-hall'
+
+const props = withDefaults(defineProps<{ mode?: HeaderMode }>(), {
+  mode: 'home',
+})
 
 const keyword = ref('')
 const searchType = ref('本站文章')
+const isTradeHall = computed(() => props.mode === 'trade-hall')
+
+const headerCopy = computed(() => isTradeHall.value
+  ? {
+      welcome: '欢迎进入佛山市农村集体“三资”智慧云平台',
+      title: '佛山市农村集体“三资”智慧云平台交易系统',
+      subtitle: '佛山市农村产权流转交易管理服务平台',
+      slogan: '科技赋能未来乡村、数字赋能乡村振兴',
+      searchPlaceholder: '请输入你要查询的信息',
+    }
+  : {
+      welcome: '您好，欢迎来到佛山市农村集体“三资”智慧云平台！',
+      title: '佛山市农村集体“三资”智慧云平台',
+      subtitle: '佛山市农村产权流转交易管理服务平台',
+      slogan: '科技赋能未来乡村　数字赋能乡村振兴',
+      searchPlaceholder: '请输入您要搜索的内容',
+    })
 
 const now = new Date()
 const weekday = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][now.getDay()]
@@ -12,19 +35,19 @@ const keepPresentationOnly = () => undefined
 </script>
 
 <template>
-  <header class="site-header">
+  <header :class="['site-header', { 'site-header--trade-hall': isTradeHall }]">
     <div class="welcome-bar">
       <div class="site-container welcome-bar__inner">
-        <span>您好，欢迎来到佛山市农村集体“三资”智慧云平台！</span>
+        <span>{{ headerCopy.welcome }}</span>
         <span data-testid="welcome-date">{{ dateText }}</span>
       </div>
     </div>
 
-    <div class="brand-hero">
+    <div :class="['brand-hero', { 'brand-hero--trade-hall': isTradeHall }]">
       <div class="brand-hero__glow brand-hero__glow--left" aria-hidden="true"></div>
       <div class="brand-hero__glow brand-hero__glow--right" aria-hidden="true"></div>
       <div class="site-container brand-hero__inner">
-        <div class="brand-lockup">
+        <div :class="['brand-lockup', { 'brand-lockup--trade-hall': isTradeHall }]">
           <div class="brand-emblem" aria-hidden="true">
             <span class="brand-emblem__sun"></span>
             <span class="brand-emblem__field brand-emblem__field--one"></span>
@@ -32,24 +55,29 @@ const keepPresentationOnly = () => undefined
             <span class="brand-emblem__field brand-emblem__field--three"></span>
           </div>
           <div class="brand-lockup__copy">
-            <p class="brand-lockup__slogan">科技赋能未来乡村　数字赋能乡村振兴</p>
-            <h1>佛山市农村集体“三资”智慧云平台</h1>
-            <p class="brand-lockup__subtitle">佛山市农村产权流转交易管理服务平台</p>
+            <p class="brand-lockup__slogan">{{ headerCopy.slogan }}</p>
+            <h1>{{ headerCopy.title }}</h1>
+            <p class="brand-lockup__subtitle">{{ headerCopy.subtitle }}</p>
           </div>
         </div>
 
-        <form class="search-panel" aria-label="站内搜索" @submit.prevent="keepPresentationOnly">
-          <div class="search-panel__field">
-            <select v-model="searchType" aria-label="搜索范围">
+        <form
+          :class="['search-panel', { 'search-panel--trade-hall': isTradeHall }]"
+          :aria-label="isTradeHall ? '交易大厅搜索' : '站内搜索'"
+          role="search"
+          @submit.prevent="keepPresentationOnly"
+        >
+          <div :class="['search-panel__field', { 'search-panel__field--plain': isTradeHall }]">
+            <select v-if="!isTradeHall" v-model="searchType" aria-label="搜索范围">
               <option>本站文章</option>
               <option>交易公告</option>
             </select>
-            <span class="search-panel__divider" aria-hidden="true"></span>
+            <span v-if="!isTradeHall" class="search-panel__divider" aria-hidden="true"></span>
             <input
               v-model="keyword"
               aria-label="搜索关键词"
               autocomplete="off"
-              placeholder="请输入您要搜索的内容"
+              :placeholder="headerCopy.searchPlaceholder"
               type="search"
             />
           </div>
@@ -171,6 +199,19 @@ const keepPresentationOnly = () => undefined
     text-shadow: 0 2px 0 rgb(255 255 255 / 75%);
   }
 
+  &--trade-hall {
+    h1 {
+      max-width: 1060px;
+      font-size: 45px;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .brand-lockup__slogan {
+      letter-spacing: 0.18em;
+    }
+  }
+
   &__subtitle {
     display: flex;
     align-items: center;
@@ -271,6 +312,29 @@ const keepPresentationOnly = () => undefined
         color: #b0aaa6;
       }
     }
+
+    &--plain {
+      border-radius: 6px 0 0 6px;
+
+      input {
+        padding-inline: 24px;
+      }
+    }
+  }
+
+  &--trade-hall {
+    width: 930px;
+
+    .search-panel__submit {
+      width: 134px;
+      letter-spacing: 0.08em;
+    }
+
+    .search-panel__map {
+      width: 168px;
+      margin-left: 28px;
+      background: rgb(255 255 255 / 82%);
+    }
   }
 
   &__divider {
@@ -324,6 +388,19 @@ const keepPresentationOnly = () => undefined
       border: 1px solid currentColor;
       border-radius: 50%;
     }
+  }
+}
+
+@media (max-width: 1399px) {
+  .brand-lockup--trade-hall {
+    h1 {
+      max-width: 990px;
+      font-size: 42px;
+    }
+  }
+
+  .search-panel--trade-hall {
+    width: 900px;
   }
 }
 </style>

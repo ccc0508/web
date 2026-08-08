@@ -32,14 +32,17 @@ test('homepage renders all required static content without reference-site reques
   await expect(page).toHaveURL('http://127.0.0.1:4173/')
 })
 
-test('all non-home navigation items are inert', async ({ page }) => {
+test('trade hall navigation opens the local page while other non-home items remain inert', async ({ page }) => {
   await page.goto('/')
   const originalUrl = page.url()
 
-  for (let index = 1; index <= 9; index += 1) {
+  for (let index = 1; index <= 8; index += 1) {
     await page.getByTestId(`nav-${index}`).click()
     await expect(page).toHaveURL(originalUrl)
   }
+
+  await page.getByTestId('nav-9').click()
+  await expect(page).toHaveURL('http://127.0.0.1:4173/trade-hall')
 })
 
 test('video placeholder shows the exact unavailable message', async ({ page }) => {

@@ -43,5 +43,5 @@
 
 ## 7. Header Date Simplification
 
-- [x] 7.1 Simplify the welcome-bar date so it displays only the current Gregorian year, month, and day, removing weekday and lunar-calendar text.
-- [x] 7.2 Add regression checks for the simplified date, then run type checking, production build, browser tests, and visual QA before committing and pushing.
+- [x] 7.1 Display the current Gregorian year, month, day, and dynamically calculated weekday in the welcome bar while removing only lunar-calendar text.
+- [x] 7.2 Update date regression checks, then run type checking, production build, browser tests, and visual QA before committing and pushing.

@@ -19,11 +19,11 @@ The homepage SHALL render the reference primary navigation labels and SHALL visu
 - **THEN** the browser remains on the homepage and no route, external page, modal, or content view is opened
 
 ### Requirement: Branded header and search presentation
-The homepage SHALL include the top welcome/date bar, the large branded hero area, the search selector and input, the search action, and the project-map action with styling and proportions consistent with the reference site. The welcome bar SHALL show only the current Gregorian year, month, and day, without weekday or lunar-calendar text. Search and project-map controls SHALL be presentation-only.
+The homepage SHALL include the top welcome/date bar, the large branded hero area, the search selector and input, the search action, and the project-map action with styling and proportions consistent with the reference site. The welcome bar SHALL show the current Gregorian year, month, and day followed by the current weekday, without lunar-calendar text. Search and project-map controls SHALL be presentation-only.
 
 #### Scenario: Current date is displayed
 - **WHEN** a visitor views the welcome bar
-- **THEN** the right side displays the current date in `YYYY年M月D日` form and does not display 星期 or 农历 text
+- **THEN** the right side displays the current date and weekday in `YYYY年M月D日　星期X` form and does not display 农历 text
 
 #### Scenario: Visitor uses a header control
 - **WHEN** a visitor types in the search field or clicks 搜索 or 项目地图

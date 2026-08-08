@@ -5,7 +5,8 @@ const keyword = ref('')
 const searchType = ref('本站文章')
 
 const now = new Date()
-const dateText = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`
+const weekday = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][now.getDay()]
+const dateText = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日　${weekday}`
 
 const keepPresentationOnly = () => undefined
 </script>

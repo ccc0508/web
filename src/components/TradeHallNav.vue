@@ -1,20 +1,29 @@
 <script setup lang="ts">
-const navigation = ['交易大厅', '会员中心', '免责声明', '服务协议', '交易指南']
-const keepPresentationOnly = () => undefined
+import type { TradeHallPage } from '../config/tradeHall'
+
+const pages: { id: TradeHallPage; label: string }[] = [
+  { id: 'trade-hall', label: '交易大厅' },
+  { id: 'member', label: '会员中心' },
+  { id: 'disclaimer', label: '免责声明' },
+  { id: 'agreement', label: '服务协议' },
+  { id: 'guide', label: '交易指南' },
+]
+
+const model = defineModel<TradeHallPage>({ required: true })
 </script>
 
 <template>
   <nav class="trade-hall-nav" aria-label="交易大厅导航" data-testid="trade-hall-nav">
     <div class="site-container trade-hall-nav__inner">
       <button
-        v-for="(label, index) in navigation"
-        :key="label"
-        :aria-current="index === 0 ? 'page' : undefined"
-        :class="['trade-hall-nav__item', { 'trade-hall-nav__item--active': index === 0 }]"
+        v-for="page in pages"
+        :key="page.id"
+        :aria-current="model === page.id ? 'page' : undefined"
+        :class="['trade-hall-nav__item', { 'trade-hall-nav__item--active': model === page.id }]"
         type="button"
-        @click="keepPresentationOnly"
+        @click="model = page.id"
       >
-        {{ label }}
+        {{ page.label }}
       </button>
 
       <RouterLink class="trade-hall-nav__platform" :to="{ name: 'home' }">
@@ -54,13 +63,13 @@ const keepPresentationOnly = () => undefined
 
   &__item {
     flex: 0 0 142px;
-    cursor: default;
+    cursor: pointer;
     background: transparent;
 
     &--active {
       flex-basis: 132px;
       color: #fff;
-      cursor: default;
+      cursor: pointer;
       background: #f6b927;
       box-shadow: inset 0 -2px 0 rgb(226 146 12 / 34%);
     }

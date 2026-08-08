@@ -110,6 +110,21 @@ test('business sections are full-width sequential rows with local controls', asy
   await expect(disclosure).toHaveAttribute('data-active-control', '顺德区')
 })
 
+test('homepage keeps the shared back-to-top control fixed and working', async ({ page }) => {
+  await page.goto('/')
+
+  const backTop = page.getByTestId('back-top')
+  await expect(backTop).toBeVisible()
+  await expect(backTop).toHaveText('顶部')
+  await expect(backTop.locator('span')).toBeAttached()
+
+  await page.evaluate(() => window.scrollTo(0, 1000))
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(500)
+
+  await backTop.click()
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(2)
+})
+
 test('transaction and expiring category carousels move one item and wrap', async ({ page }) => {
   await page.goto('/')
 

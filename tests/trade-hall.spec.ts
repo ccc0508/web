@@ -322,6 +322,16 @@ test('filter options are single-select and selected conditions stay in sync', as
   await expect(selectedConditions(page)).toContainText('资产类别：耕地')
   await expect(selectedConditions(page)).toContainText('交易类别：出租')
   await expect(selectedConditions(page)).toContainText('交易状态：正在报名')
+
+  const tradeTime = page.getByRole('radiogroup', { name: '交易时间' })
+  await tradeTime.getByRole('radio', { name: '近一周内', exact: true }).click()
+  await expect(selectedConditions(page)).toContainText('交易时间：近一周内')
+  await expect(selectedConditions(page)).not.toContainText('交易时间：自定义日期')
+
+  const publishDate = page.getByRole('radiogroup', { name: '发布日期' })
+  await publishDate.getByRole('radio', { name: '近两周内', exact: true }).click()
+  await expect(selectedConditions(page)).toContainText('发布日期：近两周内')
+  await expect(selectedConditions(page)).not.toContainText('发布日期：自定义日期')
 })
 
 test('clear restores the default filter state', async ({ page }) => {

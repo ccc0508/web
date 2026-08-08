@@ -34,6 +34,9 @@ const rangeText = (start: string, end: string) => {
   return `（${start} 至 ${end}）`
 }
 
+const timeDetail = (value: string, start: string, end: string) =>
+  value === '自定义日期' ? `自定义日期${rangeText(start, end)}` : ''
+
 const selectedTags = computed<string[]>(() => {
   const tags: string[] = []
   const appendGroup = (label: string, value: string, detail = '') => {
@@ -56,8 +59,16 @@ const selectedTags = computed<string[]>(() => {
     tags.push(`交易底价：${priceDetail}`)
   }
 
-  appendGroup('交易时间', state.tradeTime, `自定义日期${rangeText(state.customTradeTimeStart, state.customTradeTimeEnd)}`)
-  appendGroup('发布日期', state.publishDate, `自定义日期${rangeText(state.customPublishDateStart, state.customPublishDateEnd)}`)
+  appendGroup(
+    '交易时间',
+    state.tradeTime,
+    timeDetail(state.tradeTime, state.customTradeTimeStart, state.customTradeTimeEnd),
+  )
+  appendGroup(
+    '发布日期',
+    state.publishDate,
+    timeDetail(state.publishDate, state.customPublishDateStart, state.customPublishDateEnd),
+  )
 
   if (state.keyword.trim()) {
     tags.push(`关键字：${state.keyword.trim()}`)

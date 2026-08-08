@@ -44,9 +44,17 @@ test('implemented main navigation opens local pages while unfinished items remai
   await expect(page).toHaveURL('http://127.0.0.1:4173/')
   await expect(page.getByTestId('nav-0')).toHaveAttribute('aria-current', 'page')
 
+  await page.getByTestId('nav-2').click()
+  await expect(page).toHaveURL('http://127.0.0.1:4173/transaction-dynamics')
+  await expect(page.getByTestId('nav-2')).toHaveAttribute('aria-current', 'page')
+  await expect(page.getByTestId('nav-0')).not.toHaveAttribute('aria-current')
+
+  await page.getByTestId('nav-0').click()
+  await expect(page).toHaveURL('http://127.0.0.1:4173/')
+
   const homepageUrl = page.url()
 
-  for (let index = 2; index <= 8; index += 1) {
+  for (let index = 3; index <= 8; index += 1) {
     await page.getByTestId(`nav-${index}`).click()
     await expect(page).toHaveURL(homepageUrl)
   }

@@ -40,3 +40,8 @@
 - [x] 6.4 Run type checking, production build, interaction tests, and 1920px/1440px/1366px visual QA, then resolve spacing, typography, or overflow issues.
 - [x] 6.5 Implement seven-item circular category carousels for 交易动态 and 临期资产, including the additional reference categories and functional previous/next arrows that advance one item and wrap.
 - [x] 6.6 Add carousel interaction and wraparound checks, then run type checking, production build, browser tests, and desktop visual QA before committing and pushing.
+
+## 7. Header Date Simplification
+
+- [x] 7.1 Simplify the welcome-bar date so it displays only the current Gregorian year, month, and day, removing weekday and lunar-calendar text.
+- [x] 7.2 Add regression checks for the simplified date, then run type checking, production build, browser tests, and visual QA before committing and pushing.

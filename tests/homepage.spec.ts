@@ -10,6 +10,9 @@ test('homepage renders all required static content without reference-site reques
 
   await page.goto('/')
 
+  const welcomeDate = page.getByTestId('welcome-date')
+  await expect(welcomeDate).toHaveText(/^\d{4}年\d{1,2}月\d{1,2}日$/)
+  await expect(page.locator('.welcome-bar')).not.toContainText(/星期|农历/)
   await expect(page.getByRole('heading', { name: '佛山市农村集体“三资”智慧云平台' })).toBeVisible()
   await expect(page.getByRole('img', { name: '广东省静态示意地图' })).toBeVisible()
   await expect(page.getByAltText('首页轮播占位图')).toHaveAttribute('src', '/assets/carousel-placeholder.jpg')

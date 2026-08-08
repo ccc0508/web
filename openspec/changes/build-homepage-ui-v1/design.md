@@ -54,7 +54,7 @@ The hero will use layered CSS gradients and subtle decorative shapes instead of 
 
 The page will be composed from focused components:
 
-- Top welcome/date strip.
+- Top welcome/date strip with only the current Gregorian year, month, and day; weekday and lunar-calendar text are intentionally omitted.
 - Branded hero and search controls.
 - Primary navigation.
 - First showcase row with Guangdong map navigation and carousel only; the compact convenience-service column is intentionally removed.

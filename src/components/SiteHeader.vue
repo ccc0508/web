@@ -5,8 +5,7 @@ const keyword = ref('')
 const searchType = ref('本站文章')
 
 const now = new Date()
-const weekday = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][now.getDay()]
-const dateText = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日　${weekday}`
+const dateText = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`
 
 const keepPresentationOnly = () => undefined
 </script>
@@ -16,7 +15,7 @@ const keepPresentationOnly = () => undefined
     <div class="welcome-bar">
       <div class="site-container welcome-bar__inner">
         <span>您好，欢迎来到佛山市农村集体“三资”智慧云平台！</span>
-        <span>{{ dateText }}　农历日期</span>
+        <span data-testid="welcome-date">{{ dateText }}</span>
       </div>
     </div>
 

@@ -35,17 +35,12 @@ defineEmits<{
 .filter-group {
   display: flex;
   align-items: flex-start;
-  padding: 12px 0;
-  border-bottom: 1px dashed #efe7e3;
-
-  &:last-child {
-    border-bottom: 0;
-  }
+  padding: 5px 0;
 
   &__label {
-    flex: 0 0 96px;
-    padding-top: 5px;
-    color: #4a4441;
+    flex: 0 0 152px;
+    padding-top: 4px;
+    color: #111;
     font-size: 14px;
     font-weight: 700;
     text-align: right;
@@ -59,17 +54,20 @@ defineEmits<{
   &__options {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 10px;
+    gap: 0;
   }
 
   &__option {
-    padding: 4px 12px;
-    color: #5f5955;
+    min-width: 68px;
+    min-height: 25px;
+    padding: 4px 10px;
+    color: #4a4a4a;
     cursor: pointer;
     background: #fff;
     border: 1px solid transparent;
     border-radius: 3px;
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 15px;
     white-space: nowrap;
 
     &:hover {
@@ -79,7 +77,7 @@ defineEmits<{
 
     &.is-selected {
       color: #fff;
-      background: #d81f28;
+      background: #ef392f;
       font-weight: 700;
     }
   }

@@ -36,40 +36,46 @@ const model = defineModel<TradeModeId>({ required: true })
 
 <style scoped lang="scss">
 .trade-modes {
-  padding: 18px 0 12px;
+  padding: 20px 0 7px;
   background: #fff;
 
   &__inner {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+    width: 1160px;
   }
 
   &__tabs {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding-bottom: 8px;
+    flex: 1;
+    flex-wrap: nowrap;
+    gap: 1px;
+    padding: 0;
+    margin-right: 31px;
   }
 
   &__tab {
     position: relative;
-    height: 38px;
-    padding: 0 22px;
-    color: #d81f28;
+    flex: 1 1 0;
+    height: 56px;
+    padding: 0 8px;
+    color: #ed382e;
     cursor: pointer;
-    background: #fdecea;
-    border-radius: 4px 4px 0 0;
-    font-size: 16px;
+    background: #fde7e2;
+    border: 1px solid #fff;
+    border-radius: 0;
+    font-size: 18px;
+    font-weight: 700;
     white-space: nowrap;
 
     &:hover {
-      background: #fbdcd9;
+      background: #fbdad3;
     }
 
     &.is-active {
       color: #fff;
-      background: #d81f28;
+      background: #dd180d;
       font-weight: 700;
 
       &::after {
@@ -79,7 +85,7 @@ const model = defineModel<TradeModeId>({ required: true })
         width: 0;
         height: 0;
         content: '';
-        border-top: 7px solid #d81f28;
+        border-top: 9px solid #dd180d;
         border-right: 6px solid transparent;
         border-left: 6px solid transparent;
         transform: translateX(-50%);
@@ -91,20 +97,22 @@ const model = defineModel<TradeModeId>({ required: true })
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    gap: 8px;
-    height: 36px;
-    padding: 0 14px;
-    margin: 0 0 8px;
-    color: #9c9692;
-    background: #f0eeee;
-    border: 1px solid #e2ddda;
+    justify-content: space-between;
+    width: 150px;
+    height: 30px;
+    padding: 0 12px 0 15px;
+    margin: 0;
+    color: #c4c8cf;
+    background: #f5f7fa;
+    border: 1px solid #dcdfe6;
     border-radius: 3px;
     font-size: 14px;
 
     i {
       width: 0;
       height: 0;
-      border-top: 5px solid #a9a29e;
+      order: 2;
+      border-top: 5px solid #c4c8cf;
       border-right: 4px solid transparent;
       border-left: 4px solid transparent;
     }
@@ -114,8 +122,8 @@ const model = defineModel<TradeModeId>({ required: true })
 @media (max-width: 1399px) {
   .trade-modes {
     &__tab {
-      padding-inline: 17px;
-      font-size: 15px;
+      padding-inline: 5px;
+      font-size: 16px;
     }
   }
 }

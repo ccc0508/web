@@ -97,16 +97,6 @@ const selectedTags = computed<string[]>(() => {
 
     <div v-show="!collapsed" class="filter-panel__body">
       <FilterOptionGroup
-        v-model="state.district"
-        label="所属区"
-        :options="districtOptions"
-      />
-      <FilterOptionGroup
-        v-model="state.assetCategory"
-        label="资产类别"
-        :options="assetCategoryOptions"
-      />
-      <FilterOptionGroup
         v-model="state.transactionType"
         label="交易类别"
         :options="currentMode.transactionTypes"
@@ -121,6 +111,16 @@ const selectedTags = computed<string[]>(() => {
         v-model="state.negotiationMethod"
         label="协商方式"
         :options="currentMode.negotiationMethods"
+      />
+      <FilterOptionGroup
+        v-model="state.district"
+        label="所属区"
+        :options="districtOptions"
+      />
+      <FilterOptionGroup
+        v-model="state.assetCategory"
+        label="资产类别"
+        :options="assetCategoryOptions"
       />
 
       <div class="filter-group" role="radiogroup" aria-label="交易底价">
@@ -138,8 +138,6 @@ const selectedTags = computed<string[]>(() => {
             >
               {{ option }}
             </button>
-          </div>
-          <div v-if="state.price === '自定义金额'" class="filter-group__custom">
             <input
               v-model="state.customPriceStart"
               aria-label="起始金额"
@@ -177,8 +175,6 @@ const selectedTags = computed<string[]>(() => {
             >
               {{ option }}
             </button>
-          </div>
-          <div v-if="state.tradeTime === '自定义日期'" class="filter-group__custom">
             <input
               v-model="state.customTradeTimeStart"
               aria-label="交易开始日期"
@@ -210,8 +206,6 @@ const selectedTags = computed<string[]>(() => {
             >
               {{ option }}
             </button>
-          </div>
-          <div v-if="state.publishDate === '自定义日期'" class="filter-group__custom">
             <input
               v-model="state.customPublishDateStart"
               aria-label="发布开始日期"
@@ -249,27 +243,25 @@ const selectedTags = computed<string[]>(() => {
 <style scoped lang="scss">
 .filter-panel {
   background: #fff;
-  border: 1px solid #efe6e2;
-  box-shadow: 0 6px 18px rgb(99 42 35 / 5%);
+  border: 1px solid #dedede;
 
   &__toolbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 52px;
-    padding: 10px 18px;
-    background: #faf6f4;
-    border-bottom: 1px solid #f0e7e3;
+    min-height: 48px;
+    padding: 8px 12px;
+    background: #fff;
   }
 
   &__selected {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     min-width: 0;
     padding-right: 20px;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   &__selected-label {
@@ -281,15 +273,15 @@ const selectedTags = computed<string[]>(() => {
   &__tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
   }
 
   &__tag {
-    padding: 3px 10px;
-    color: #c91c24;
-    background: #fdeeed;
-    border: 1px solid #f5c8c6;
-    border-radius: 3px;
+    padding: 2px 8px;
+    color: #ed382e;
+    background: #fff;
+    border: 1px solid #f0b4ae;
+    border-radius: 2px;
     font-size: 13px;
     white-space: nowrap;
   }
@@ -297,42 +289,35 @@ const selectedTags = computed<string[]>(() => {
   &__actions {
     display: flex;
     flex-shrink: 0;
-    gap: 10px;
+    gap: 18px;
   }
 
   &__action {
-    padding: 5px 16px;
-    color: #d81f28;
+    padding: 4px 10px;
+    color: #ef382f;
     cursor: pointer;
-    background: #fff;
-    border: 1px solid #e6b7b5;
-    border-radius: 3px;
+    background: transparent;
     font-size: 14px;
 
     &:hover {
-      background: #fdeeed;
+      color: #c91c24;
     }
   }
 
   &__body {
-    padding: 6px 18px 18px;
+    padding: 2px 12px 18px;
   }
 }
 
 .filter-group {
   display: flex;
   align-items: flex-start;
-  padding: 12px 0;
-  border-bottom: 1px dashed #efe7e3;
-
-  &:last-child {
-    border-bottom: 0;
-  }
+  padding: 5px 0;
 
   &__label {
-    flex: 0 0 96px;
-    padding-top: 5px;
-    color: #4a4441;
+    flex: 0 0 152px;
+    padding-top: 4px;
+    color: #111;
     font-size: 14px;
     font-weight: 700;
     text-align: right;
@@ -346,17 +331,21 @@ const selectedTags = computed<string[]>(() => {
   &__options {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 10px;
+    align-items: center;
+    gap: 0;
   }
 
   &__option {
-    padding: 4px 12px;
-    color: #5f5955;
+    min-width: 68px;
+    min-height: 25px;
+    padding: 4px 10px;
+    color: #4a4a4a;
     cursor: pointer;
     background: #fff;
     border: 1px solid transparent;
     border-radius: 3px;
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 15px;
     white-space: nowrap;
 
     &:hover {
@@ -366,29 +355,19 @@ const selectedTags = computed<string[]>(() => {
 
     &.is-selected {
       color: #fff;
-      background: #d81f28;
+      background: #ef392f;
       font-weight: 700;
     }
   }
 
-  &__custom {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-    padding: 10px 12px;
-    background: #fdf8f6;
-    border: 1px solid #f2e6e1;
-    border-radius: 4px;
-
+  &__options {
     input {
-      width: 190px;
-      height: 32px;
+      width: 120px;
+      height: 30px;
       padding: 0 10px;
       color: #403a37;
       background: #fff;
-      border: 1px solid #d9cfcb;
+      border: 1px solid #dcdfe6;
       border-radius: 3px;
 
       &:focus {
@@ -398,26 +377,30 @@ const selectedTags = computed<string[]>(() => {
     }
 
     input[type='date'] {
-      width: 162px;
+      width: 140px;
     }
   }
 
   &__dash {
+    padding: 0 8px;
     color: #8e8884;
     white-space: nowrap;
   }
 
   &__confirm {
-    height: 32px;
-    padding: 0 18px;
-    color: #fff;
+    height: 30px;
+    padding: 0 10px;
+    margin-left: 8px;
+    color: #111;
     cursor: pointer;
-    background: #d81f28;
-    border-radius: 3px;
-    font-size: 13px;
+    background: #fff;
+    border: 1px solid #a9a9a9;
+    border-radius: 2px;
+    font-size: 14px;
 
     &:hover {
-      background: #c01720;
+      color: #ed382e;
+      border-color: #ed382e;
     }
   }
 
@@ -425,16 +408,16 @@ const selectedTags = computed<string[]>(() => {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: 0;
   }
 
   &__keyword {
-    width: 300px;
-    height: 32px;
+    width: 220px;
+    height: 30px;
     padding: 0 10px;
     color: #403a37;
     background: #fff;
-    border: 1px solid #d9cfcb;
+    border: 1px solid #dcdfe6;
     border-radius: 3px;
 
     &:focus {

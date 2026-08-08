@@ -51,11 +51,13 @@ const isTradeHall = computed(() => activePage.value === 'trade-hall')
   &__main {
     min-height: 480px;
     padding-bottom: 40px;
-    background: #fff;
+    background: #f5f5f5;
   }
 
   &__body {
-    padding-top: 14px;
+    width: 1160px;
+    padding-top: 0;
+    background: #fff;
   }
 
   &__aux {
@@ -66,5 +68,7 @@ const isTradeHall = computed(() => activePage.value === 'trade-hall')
 
 .trade-hall-results {
   margin-top: 18px;
+  background: #fff;
+  border-top: 1px solid #dedede;
 }
 </style>

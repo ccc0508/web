@@ -114,7 +114,7 @@ test('trade hall bidding process shows eight steps in order with connecting arro
   await expect(process.locator('.trade-process__arrow')).toHaveCount(7)
   await expect(process.locator('.trade-process__icon').first()).toHaveCSS(
     'background-color',
-    'rgb(249, 167, 187)',
+    'rgb(255, 133, 139)',
   )
   await expect(process.locator('.trade-process__label')).toHaveText([
     '阅读公告',
@@ -126,7 +126,7 @@ test('trade hall bidding process shows eight steps in order with connecting arro
     '合同签订',
     '交易结束',
   ])
-  await expect(process.locator('.trade-process__arrow').first()).toHaveCSS('color', 'rgb(240, 104, 63)')
+  await expect(process.locator('.trade-process__arrow').first()).toHaveCSS('color', 'rgb(239, 74, 44)')
 })
 
 test('trade hall modes show six tabs in order with a static sort control', async ({ page }) => {
@@ -141,7 +141,7 @@ test('trade hall modes show six tabs in order with a static sort control', async
   )
   await expect(page.getByRole('tab', { name: '网上竞投', exact: true })).toHaveCSS(
     'background-color',
-    'rgb(216, 31, 40)',
+    'rgb(221, 24, 13)',
   )
   await expect(page.getByRole('tab', { name: '公开协商', exact: true })).toHaveAttribute(
     'aria-selected',
@@ -149,17 +149,17 @@ test('trade hall modes show six tabs in order with a static sort control', async
   )
   await expect(page.getByRole('tab', { name: '公开协商', exact: true })).toHaveCSS(
     'background-color',
-    'rgb(253, 236, 234)',
+    'rgb(253, 231, 226)',
   )
   await expect(page.getByRole('tab', { name: '公开协商', exact: true })).toHaveCSS(
     'color',
-    'rgb(216, 31, 40)',
+    'rgb(237, 56, 46)',
   )
 
   const sortControl = page.getByTestId('trade-hall-sort')
   await expect(sortControl).toHaveText('默认排序')
   await expect(sortControl).toHaveAttribute('aria-disabled', 'true')
-  await expect(sortControl).toHaveCSS('color', 'rgb(156, 150, 146)')
+  await expect(sortControl).toHaveCSS('color', 'rgb(196, 200, 207)')
 })
 
 test('all six trade modes are switchable with selected state moving', async ({ page }) => {
@@ -169,13 +169,19 @@ test('all six trade modes are switchable with selected state moving', async ({ p
     const tab = page.getByRole('tab', { name: label, exact: true })
     await tab.click()
     await expect(tab).toHaveAttribute('aria-selected', 'true')
-    await expect(tab).toHaveCSS('background-color', 'rgb(216, 31, 40)')
+    await expect(tab).toHaveCSS('background-color', 'rgb(221, 24, 13)')
     await expectComingSoon(tradeHallResults(page))
   }
 })
 
 test('four public bidding modes share the complete common filter set', async ({ page }) => {
   await page.goto('/trade-hall')
+
+  expect(
+    await filterPanel(page)
+      .locator('[role="radiogroup"]')
+      .evaluateAll((groups) => groups.map((group) => group.getAttribute('aria-label'))),
+  ).toEqual(['交易类别', '交易状态', '所属区', '资产类别', '交易底价', '交易时间', '发布日期'])
 
   const verifyMode = async (label: string) => {
     await page.getByRole('tab', { name: label, exact: true }).click()
@@ -302,7 +308,7 @@ test('filter options are single-select and selected conditions stay in sync', as
   )
   await expect(district.getByRole('radio', { name: '南海区', exact: true })).toHaveCSS(
     'background-color',
-    'rgb(216, 31, 40)',
+    'rgb(239, 57, 47)',
   )
 
   await district.getByRole('radio', { name: '顺德区', exact: true }).click()
@@ -353,8 +359,8 @@ test('clear restores the default filter state', async ({ page }) => {
   await expect(district.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute('aria-checked', 'true')
   await expect(district.getByRole('radio', { name: '南海区', exact: true })).toHaveAttribute('aria-checked', 'false')
   await expect(priceGroup.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute('aria-checked', 'true')
-  await expect(page.getByLabel('起始金额')).toHaveCount(0)
-  await expect(page.getByLabel('结束金额')).toHaveCount(0)
+  await expect(page.getByLabel('起始金额')).toHaveValue('')
+  await expect(page.getByLabel('结束金额')).toHaveValue('')
   await expect(page.getByLabel('关键字输入')).toHaveValue('')
   await expect(selectedConditions(page)).not.toContainText('南海区')
   await expect(selectedConditions(page)).not.toContainText('自定义金额')
@@ -458,8 +464,8 @@ test('switching modes resets every filter and custom input', async ({ page }) =>
   await expect(district.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute('aria-checked', 'true')
   await expect(district.getByRole('radio', { name: '南海区', exact: true })).toHaveAttribute('aria-checked', 'false')
   await expect(priceGroup.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute('aria-checked', 'true')
-  await expect(page.getByLabel('起始金额')).toHaveCount(0)
-  await expect(page.getByLabel('结束金额')).toHaveCount(0)
+  await expect(page.getByLabel('起始金额')).toHaveValue('')
+  await expect(page.getByLabel('结束金额')).toHaveValue('')
   await expect(page.getByLabel('关键字输入')).toHaveValue('')
   await expect(selectedConditions(page)).not.toContainText('南海区')
   await expect(selectedConditions(page)).not.toContainText('自定义金额')

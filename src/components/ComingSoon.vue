@@ -1,83 +1,65 @@
 <template>
   <div class="coming-soon" data-testid="coming-soon" role="status">
     <div class="coming-soon__gavel" aria-hidden="true">
-      <span class="coming-soon__gavel-head"></span>
-      <span class="coming-soon__gavel-handle"></span>
+      <svg viewBox="0 0 68 48">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6">
+          <path d="m17 10 17 17" />
+          <path d="m11 12 8-8 20 20-8 8z" />
+          <path d="m38 24 18 18" />
+          <path d="m50 39 8-8 4 4-8 8z" />
+          <path d="M6 43h23M9 38h17" />
+        </g>
+      </svg>
     </div>
-    <p class="coming-soon__title">敬请期待...</p>
-    <p class="coming-soon__subtitle">Coming soon...</p>
+    <div class="coming-soon__copy">
+      <p class="coming-soon__title">敬请期待...</p>
+      <p class="coming-soon__subtitle">Coming soon...</p>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .coming-soon {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 58px 24px 64px;
+  min-height: 122px;
+  padding: 20px 24px 28px;
+  color: #e2e2e2;
 
   &__gavel {
-    position: relative;
-    width: 116px;
-    height: 86px;
-    margin-bottom: 18px;
-  }
+    flex: 0 0 68px;
+    width: 68px;
+    height: 48px;
+    margin-right: 15px;
 
-  &__gavel-head {
-    position: absolute;
-    top: 8px;
-    left: 9px;
-    width: 88px;
-    height: 28px;
-    background: #dcd6d2;
-    border-radius: 14px;
-
-    &::before,
-    &::after {
-      position: absolute;
-      top: 3px;
-      width: 20px;
-      height: 22px;
-      content: '';
-      background: #e9e4e1;
-      border-radius: 50%;
-    }
-
-    &::before {
-      left: 6px;
-    }
-
-    &::after {
-      right: 6px;
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
     }
   }
 
-  &__gavel-handle {
-    position: absolute;
-    top: 22px;
-    left: 55px;
-    width: 50px;
-    height: 15px;
-    background: #dcd6d2;
-    border-radius: 8px;
-    transform: rotate(38deg);
-    transform-origin: 8px 8px;
+  &__copy {
+    min-width: 150px;
   }
 
   &__title {
-    margin: 0 0 8px;
-    color: #6f6864;
-    font-size: 26px;
+    margin: 0;
+    color: #e2e2e2;
+    font-size: 24px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    line-height: 1.12;
+    letter-spacing: 0.06em;
   }
 
   &__subtitle {
     margin: 0;
-    color: #a8a29e;
-    font-size: 14px;
-    letter-spacing: 0.16em;
+    color: #e7e7e7;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: 0.02em;
   }
 }
 </style>

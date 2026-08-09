@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ComprehensiveInfoView from '../views/ComprehensiveInfoView.vue'
+import ExpiringAssetsView from '../views/ExpiringAssetsView.vue'
 import HomeView from '../views/HomeView.vue'
 import TransactionDynamicsView from '../views/TransactionDynamicsView.vue'
 import TradeHallView from '../views/TradeHallView.vue'
@@ -21,6 +22,11 @@ const router = createRouter({
       path: '/transaction-dynamics',
       name: 'transaction-dynamics',
       component: TransactionDynamicsView,
+    },
+    {
+      path: '/expiring-assets',
+      name: 'expiring-assets',
+      component: ExpiringAssetsView,
     },
     {
       path: '/trade-hall',

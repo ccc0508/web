@@ -5,6 +5,8 @@ defineProps<{
   modelValue: string
   options: readonly string[]
   showTailArrow?: boolean
+  tailArrowAfter?: string
+  testIdPrefix?: string
 }>()
 
 defineEmits<{
@@ -15,24 +17,33 @@ defineEmits<{
 <template>
   <div
     class="compact-filter-group"
-    :data-testid="`transaction-filter-${groupId}`"
+    :data-testid="`${testIdPrefix ?? 'transaction-filter'}-${groupId}`"
     role="radiogroup"
     :aria-label="label"
   >
     <span class="compact-filter-group__label">{{ label }}：</span>
     <div class="compact-filter-group__options">
-      <button
-        v-for="option in options"
-        :key="option"
-        :aria-checked="modelValue === option"
-        :class="['compact-filter-group__option', { 'is-selected': modelValue === option }]"
-        role="radio"
-        type="button"
-        @click="$emit('update:modelValue', option)"
-      >
-        {{ option }}
-      </button>
-      <span v-if="showTailArrow" class="compact-filter-group__tail-arrow" aria-hidden="true"></span>
+      <template v-for="option in options" :key="option">
+        <button
+          :aria-checked="modelValue === option"
+          :class="['compact-filter-group__option', { 'is-selected': modelValue === option }]"
+          role="radio"
+          type="button"
+          @click="$emit('update:modelValue', option)"
+        >
+          {{ option }}
+        </button>
+        <span
+          v-if="showTailArrow && tailArrowAfter === option"
+          class="compact-filter-group__tail-arrow"
+          aria-hidden="true"
+        ></span>
+      </template>
+      <span
+        v-if="showTailArrow && !tailArrowAfter"
+        class="compact-filter-group__tail-arrow"
+        aria-hidden="true"
+      ></span>
     </div>
   </div>
 </template>
@@ -40,7 +51,7 @@ defineEmits<{
 <style scoped lang="scss">
 .compact-filter-group {
   display: grid;
-  grid-template-columns: 100px minmax(0, 1fr);
+  grid-template-columns: var(--compact-filter-label-width, 100px) minmax(0, 1fr);
   align-items: start;
   min-height: 36px;
 

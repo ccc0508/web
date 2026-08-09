@@ -52,9 +52,17 @@ test('implemented main navigation opens local pages while unfinished items remai
   await page.getByTestId('nav-0').click()
   await expect(page).toHaveURL('http://127.0.0.1:4173/')
 
+  await page.getByTestId('nav-3').click()
+  await expect(page).toHaveURL('http://127.0.0.1:4173/expiring-assets')
+  await expect(page.getByTestId('nav-3')).toHaveAttribute('aria-current', 'page')
+  await expect(page.getByTestId('nav-0')).not.toHaveAttribute('aria-current')
+
+  await page.getByTestId('nav-0').click()
+  await expect(page).toHaveURL('http://127.0.0.1:4173/')
+
   const homepageUrl = page.url()
 
-  for (let index = 3; index <= 8; index += 1) {
+  for (let index = 4; index <= 8; index += 1) {
     await page.getByTestId(`nav-${index}`).click()
     await expect(page).toHaveURL(homepageUrl)
   }
@@ -64,7 +72,7 @@ test('implemented main navigation opens local pages while unfinished items remai
 })
 
 test('ordinary main navigation geometry stays stable across local routes', async ({ page }) => {
-  const routes = ['/', '/comprehensive-info', '/transaction-dynamics']
+  const routes = ['/', '/comprehensive-info', '/transaction-dynamics', '/expiring-assets']
   const snapshots: Array<{
     ordinary: Array<{ width: number; fontSize: string; fontWeight: string }>
     hall: { width: number; fontSize: string; fontWeight: string }
@@ -98,6 +106,7 @@ test('ordinary main navigation geometry stays stable across local routes', async
 
   expect(snapshots[1]).toEqual(snapshots[0])
   expect(snapshots[2]).toEqual(snapshots[0])
+  expect(snapshots[3]).toEqual(snapshots[0])
   const ordinaryWidths = snapshots[0].ordinary.map((item) => item.width)
   expect(Math.max(...ordinaryWidths) - Math.min(...ordinaryWidths)).toBeLessThan(1)
   expect(snapshots[0].hall.width).toBe(148)

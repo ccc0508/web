@@ -13,7 +13,7 @@ const navigation: PrimaryNavigationItem[] = [
   { label: '首页', routeName: 'home' },
   { label: '综合信息', routeName: 'comprehensive-info' },
   { label: '交易动态', routeName: 'transaction-dynamics' },
-  { label: '临期资产' },
+  { label: '临期资产', routeName: 'expiring-assets' },
   { label: '三资公开' },
   { label: '农村工程和采购' },
   { label: '村域招商' },

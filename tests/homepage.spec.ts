@@ -32,7 +32,7 @@ test('homepage renders all required static content without reference-site reques
   await expect(page).toHaveURL('http://127.0.0.1:4173/')
 })
 
-test('implemented main navigation opens local pages while unfinished items remain inert', async ({ page }) => {
+test('main navigation opens every implemented local page', async ({ page }) => {
   await page.goto('/')
 
   await page.getByTestId('nav-1').click()
@@ -63,6 +63,7 @@ test('implemented main navigation opens local pages while unfinished items remai
   for (const [index, path, title] of [
     [4, '/three-assets-disclosure', '三资公开'],
     [5, '/rural-engineering-procurement', '农村工程和采购'],
+    [6, '/village-investment', '村域招商'],
     [7, '/financial-supermarket', '金融超市'],
     [8, '/warning-list', '警示名单'],
   ] as const) {
@@ -74,11 +75,6 @@ test('implemented main navigation opens local pages while unfinished items remai
     await page.getByTestId('nav-0').click()
     await expect(page).toHaveURL('http://127.0.0.1:4173/')
   }
-
-  const homepageUrl = page.url()
-
-  await page.getByTestId('nav-6').click()
-  await expect(page).toHaveURL(homepageUrl)
 
   await page.getByTestId('nav-9').click()
   await expect(page).toHaveURL('http://127.0.0.1:4173/trade-hall')
@@ -92,6 +88,7 @@ test('ordinary main navigation geometry stays stable across local routes', async
     '/expiring-assets',
     '/three-assets-disclosure',
     '/rural-engineering-procurement',
+    '/village-investment',
     '/financial-supermarket',
     '/warning-list',
   ]

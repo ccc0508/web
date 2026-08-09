@@ -42,6 +42,12 @@ const router = createRouter({
       props: { title: '农村工程和采购' },
     },
     {
+      path: '/village-investment',
+      name: 'village-investment',
+      component: PortalPlaceholderView,
+      props: { title: '村域招商' },
+    },
+    {
       path: '/financial-supermarket',
       name: 'financial-supermarket',
       component: PortalPlaceholderView,

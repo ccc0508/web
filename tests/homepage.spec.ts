@@ -60,19 +60,41 @@ test('implemented main navigation opens local pages while unfinished items remai
   await page.getByTestId('nav-0').click()
   await expect(page).toHaveURL('http://127.0.0.1:4173/')
 
+  for (const [index, path, title] of [
+    [4, '/three-assets-disclosure', '三资公开'],
+    [5, '/rural-engineering-procurement', '农村工程和采购'],
+    [7, '/financial-supermarket', '金融超市'],
+    [8, '/warning-list', '警示名单'],
+  ] as const) {
+    await page.getByTestId(`nav-${index}`).click()
+    await expect(page).toHaveURL(`http://127.0.0.1:4173${path}`)
+    await expect(page.getByTestId(`nav-${index}`)).toHaveAttribute('aria-current', 'page')
+    await expect(page.getByLabel('当前位置')).toContainText(`当前位置首页/${title}`)
+    await expect(page.getByTestId('portal-placeholder-results')).toContainText('敬请期待...')
+    await page.getByTestId('nav-0').click()
+    await expect(page).toHaveURL('http://127.0.0.1:4173/')
+  }
+
   const homepageUrl = page.url()
 
-  for (let index = 4; index <= 8; index += 1) {
-    await page.getByTestId(`nav-${index}`).click()
-    await expect(page).toHaveURL(homepageUrl)
-  }
+  await page.getByTestId('nav-6').click()
+  await expect(page).toHaveURL(homepageUrl)
 
   await page.getByTestId('nav-9').click()
   await expect(page).toHaveURL('http://127.0.0.1:4173/trade-hall')
 })
 
 test('ordinary main navigation geometry stays stable across local routes', async ({ page }) => {
-  const routes = ['/', '/comprehensive-info', '/transaction-dynamics', '/expiring-assets']
+  const routes = [
+    '/',
+    '/comprehensive-info',
+    '/transaction-dynamics',
+    '/expiring-assets',
+    '/three-assets-disclosure',
+    '/rural-engineering-procurement',
+    '/financial-supermarket',
+    '/warning-list',
+  ]
   const snapshots: Array<{
     ordinary: Array<{ width: number; fontSize: string; fontWeight: string }>
     hall: { width: number; fontSize: string; fontWeight: string }
@@ -104,9 +126,9 @@ test('ordinary main navigation geometry stays stable across local routes', async
     )
   }
 
-  expect(snapshots[1]).toEqual(snapshots[0])
-  expect(snapshots[2]).toEqual(snapshots[0])
-  expect(snapshots[3]).toEqual(snapshots[0])
+  for (const snapshot of snapshots.slice(1)) {
+    expect(snapshot).toEqual(snapshots[0])
+  }
   const ordinaryWidths = snapshots[0].ordinary.map((item) => item.width)
   expect(Math.max(...ordinaryWidths) - Math.min(...ordinaryWidths)).toBeLessThan(1)
   expect(snapshots[0].hall.width).toBe(148)

@@ -14,11 +14,11 @@ const navigation: PrimaryNavigationItem[] = [
   { label: '综合信息', routeName: 'comprehensive-info' },
   { label: '交易动态', routeName: 'transaction-dynamics' },
   { label: '临期资产', routeName: 'expiring-assets' },
-  { label: '三资公开' },
-  { label: '农村工程和采购' },
+  { label: '三资公开', routeName: 'three-assets-disclosure' },
+  { label: '农村工程和采购', routeName: 'rural-engineering-procurement' },
   { label: '村域招商' },
-  { label: '金融超市' },
-  { label: '警示名单' },
+  { label: '金融超市', routeName: 'financial-supermarket' },
+  { label: '警示名单', routeName: 'warning-list' },
   { label: '交易大厅', routeName: 'trade-hall' },
 ]
 

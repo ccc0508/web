@@ -51,6 +51,7 @@ test('trade hall renders the exact first-screen copy and local-only controls', a
 })
 
 test('trade hall secondary navigation switches pages and keeps the home entry', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1080 })
   await page.goto('/trade-hall')
 
   const navigation = tradeHallNav(page)
@@ -78,6 +79,18 @@ test('trade hall secondary navigation switches pages and keeps the home entry', 
       }),
     )
   const initialGeometry = await readGeometry()
+  const readPageGeometry = () =>
+    page.evaluate(() =>
+      ['.welcome-bar__inner', '.brand-hero__inner', '.trade-hall-nav__inner'].map((selector) => {
+        const box = document.querySelector(selector)?.getBoundingClientRect()
+        return {
+          selector,
+          x: box ? Math.round(box.x * 10) / 10 : null,
+          width: box ? Math.round(box.width * 10) / 10 : null,
+        }
+      }),
+    )
+  const initialPageGeometry = await readPageGeometry()
 
   const originalUrl = page.url()
   for (const label of ['会员中心', '免责声明', '服务协议', '交易指南']) {
@@ -88,6 +101,7 @@ test('trade hall secondary navigation switches pages and keeps the home entry', 
     await expect(item).toHaveCSS('background-color', 'rgb(246, 185, 39)')
     await expect(hallItem).not.toHaveAttribute('aria-current', 'page')
     expect(await readGeometry()).toEqual(initialGeometry)
+    expect(await readPageGeometry()).toEqual(initialPageGeometry)
   }
 
   await hallItem.click()

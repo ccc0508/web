@@ -66,6 +66,19 @@ test('trade hall secondary navigation switches pages and keeps the home entry', 
   await expect(hallItem).toHaveAttribute('aria-current', 'page')
   await expect(hallItem).toHaveCSS('background-color', 'rgb(246, 185, 39)')
 
+  const readGeometry = () =>
+    navigation.locator('button, a').evaluateAll((items) =>
+      items.map((item) => {
+        const box = item.getBoundingClientRect()
+        return {
+          text: item.textContent?.trim(),
+          x: Math.round(box.x * 10) / 10,
+          width: Math.round(box.width * 10) / 10,
+        }
+      }),
+    )
+  const initialGeometry = await readGeometry()
+
   const originalUrl = page.url()
   for (const label of ['会员中心', '免责声明', '服务协议', '交易指南']) {
     const item = navigation.getByRole('button', { name: label, exact: true })
@@ -74,6 +87,7 @@ test('trade hall secondary navigation switches pages and keeps the home entry', 
     await expect(item).toHaveAttribute('aria-current', 'page')
     await expect(item).toHaveCSS('background-color', 'rgb(246, 185, 39)')
     await expect(hallItem).not.toHaveAttribute('aria-current', 'page')
+    expect(await readGeometry()).toEqual(initialGeometry)
   }
 
   await hallItem.click()

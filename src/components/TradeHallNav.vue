@@ -66,8 +66,11 @@ const model = defineModel<TradeHallPage>({ required: true })
     cursor: pointer;
     background: transparent;
 
-    &--active {
+    &:first-child {
       flex-basis: 132px;
+    }
+
+    &--active {
       color: #fff;
       cursor: pointer;
       background: #f6b927;
@@ -88,7 +91,7 @@ const model = defineModel<TradeHallPage>({ required: true })
       flex-basis: 132px;
       font-size: 16px;
 
-      &--active {
+      &:first-child {
         flex-basis: 124px;
       }
     }

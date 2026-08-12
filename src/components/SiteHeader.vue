@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 type HeaderMode = 'home' | 'trade-hall'
+
+const router = useRouter()
 
 const props = withDefaults(defineProps<{ mode?: HeaderMode }>(), {
   mode: 'home',
@@ -32,6 +35,8 @@ const weekday = ['星期日', '星期一', '星期二', '星期三', '星期四'
 const dateText = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日　${weekday}`
 
 const keepPresentationOnly = () => undefined
+
+const goToProjectMap = () => router.push('/project-map')
 </script>
 
 <template>
@@ -82,7 +87,7 @@ const keepPresentationOnly = () => undefined
             />
           </div>
           <button class="search-panel__submit" type="submit">搜索</button>
-          <button class="search-panel__map" type="button" @click="keepPresentationOnly">
+          <button class="search-panel__map" type="button" @click="goToProjectMap">
             <span class="search-panel__pin" aria-hidden="true"></span>
             项目地图
           </button>

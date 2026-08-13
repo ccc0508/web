@@ -3,6 +3,7 @@ import ComprehensiveInfoView from '../views/ComprehensiveInfoView.vue'
 import ExpiringAssetsView from '../views/ExpiringAssetsView.vue'
 import HomeView from '../views/HomeView.vue'
 import PortalPlaceholderView from '../views/PortalPlaceholderView.vue'
+import ProjectMapView from '../views/ProjectMapView.vue'
 import TransactionDynamicsView from '../views/TransactionDynamicsView.vue'
 import TradeHallView from '../views/TradeHallView.vue'
 
@@ -13,6 +14,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+    },
+    {
+      path: '/project-map',
+      name: 'project-map',
+      component: ProjectMapView,
     },
     {
       path: '/comprehensive-info',

@@ -45,7 +45,7 @@ test('trade hall renders the exact first-screen copy and local-only controls', a
   await searchForm.getByRole('button', { name: '搜索', exact: true }).click()
   await expect(page).toHaveURL(originalUrl)
   await searchForm.getByRole('button', { name: '项目地图', exact: true }).click()
-  await expect(page).toHaveURL(originalUrl)
+  await expect(page).toHaveURL('http://127.0.0.1:4173/project-map')
 
   expect(referenceRequests).toEqual([])
 })

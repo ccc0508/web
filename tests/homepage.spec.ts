@@ -29,7 +29,7 @@ test('homepage renders all required static content without reference-site reques
   await page.getByRole('button', { name: '项目地图', exact: true }).click()
 
   expect(referenceRequests).toEqual([])
-  await expect(page).toHaveURL('http://127.0.0.1:4173/')
+  await expect(page).toHaveURL('http://127.0.0.1:4173/project-map')
 })
 
 test('main navigation opens every implemented local page', async ({ page }) => {

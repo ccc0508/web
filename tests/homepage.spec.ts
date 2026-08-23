@@ -13,7 +13,9 @@ test('homepage renders all required static content without reference-site reques
   const welcomeDate = page.getByTestId('welcome-date')
   await expect(welcomeDate).toHaveText(/^\d{4}年\d{1,2}月\d{1,2}日　星期[日一二三四五六]$/)
   await expect(page.locator('.welcome-bar')).not.toContainText('农历')
-  await expect(page.getByRole('heading', { name: '佛山市农村集体“三资”智慧云平台' })).toBeVisible()
+  await expect(page.getByText('您好，欢迎来到广东省农村集体“三资”智慧云平台！', { exact: true })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '广东省农村集体“三资”智慧云平台' })).toBeVisible()
+  await expect(page.getByText('广东省农村产权流转交易管理服务平台', { exact: true })).toBeVisible()
   await expect(page.getByRole('img', { name: '广东省静态示意地图' })).toBeVisible()
   await expect(page.getByAltText('首页轮播占位图')).toHaveAttribute('src', '/assets/carousel-placeholder.jpg')
   await expect(page.getByText('暂无公开数据', { exact: true })).toHaveCount(5)
@@ -190,10 +192,9 @@ test('business sections are full-width sequential rows with local controls', asy
 
   const disclosure = sections[2]
   for (const label of ['禅城区', '南海区', '顺德区', '高明区', '三水区']) {
-    await expect(disclosure.getByRole('button', { name: label, exact: true })).toBeVisible()
+    await expect(disclosure.getByRole('button', { name: label, exact: true })).toHaveCount(0)
   }
-  await disclosure.getByRole('button', { name: '顺德区', exact: true }).click()
-  await expect(disclosure).toHaveAttribute('data-active-control', '顺德区')
+  await expect(disclosure).toHaveAttribute('data-active-control', '')
 })
 
 test('homepage keeps the shared back-to-top control fixed and working', async ({ page }) => {

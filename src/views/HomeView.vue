@@ -47,13 +47,6 @@ const businessSections = [
     sectionId: 'disclosure',
     titleLead: '三资',
     titleRest: '公开',
-    districts: [
-      { label: '禅城区', color: '#f3b3b4' },
-      { label: '南海区', color: '#f1b8ae' },
-      { label: '顺德区', color: '#9ad6ae' },
-      { label: '高明区', color: '#efadc1' },
-      { label: '三水区', color: '#f5d66f' },
-    ],
   },
   {
     sectionId: 'projects',

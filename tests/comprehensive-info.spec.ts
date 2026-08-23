@@ -21,7 +21,7 @@ test('comprehensive information page renders the required static structure', asy
 
   await page.goto('/comprehensive-info')
 
-  await expect(page.getByRole('heading', { name: '佛山市农村集体“三资”智慧云平台' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '广东省农村集体“三资”智慧云平台' })).toBeVisible()
   await expect(page.getByTestId('nav-1')).toHaveAttribute('aria-current', 'page')
   await expect(page.getByTestId('nav-0')).not.toHaveAttribute('aria-current')
   await expect(page.getByLabel('当前位置')).toContainText('当前位置首页/综合信息')

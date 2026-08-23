@@ -23,9 +23,9 @@ const headerCopy = computed(() => isTradeHall.value
       searchPlaceholder: '请输入你要查询的信息',
     }
   : {
-      welcome: '您好，欢迎来到佛山市农村集体“三资”智慧云平台！',
-      title: '佛山市农村集体“三资”智慧云平台',
-      subtitle: '佛山市农村产权流转交易管理服务平台',
+      welcome: '您好，欢迎来到广东省农村集体“三资”智慧云平台！',
+      title: '广东省农村集体“三资”智慧云平台',
+      subtitle: '广东省农村产权流转交易管理服务平台',
       slogan: '科技赋能未来乡村　数字赋能乡村振兴',
       searchPlaceholder: '请输入您要搜索的内容',
     })

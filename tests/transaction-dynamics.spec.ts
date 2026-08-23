@@ -1,13 +1,8 @@
 import { expect, test, type Page } from '@playwright/test'
 
-const districtOptions = ['不限', '禅城区', '南海区', '顺德区', '高明区', '三水区']
-
-const townOptions = [
-  '不限', '石湾镇街道', '张槎街道', '祖庙街道', '南庄镇', '桂城街道', '九江镇', '西樵镇',
-  '丹灶镇', '狮山镇', '大沥镇', '里水镇', '大良街道', '伦教街道', '陈村镇', '北滘镇',
-  '乐从镇', '勒流街道', '龙江镇', '杏坛镇', '均安镇', '容桂街道', '荷城街道', '杨和镇',
-  '明城镇', '更合镇', '西南街道', '大塘镇', '乐平镇', '白坭镇', '芦苞镇', '云东海街道',
-  '南山镇',
+const cityOptions = [
+  '不限', '广州市', '韶关市', '深圳市', '珠海市', '汕头市', '佛山市', '江门市', '湛江市', '茂名市', '肇庆市',
+  '惠州市', '梅州市', '汕尾市', '河源市', '阳江市', '清远市', '东莞市', '中山市', '潮州市', '揭阳市', '云浮市',
 ]
 
 const assetOptions = [
@@ -54,14 +49,12 @@ test('transaction dynamics page renders complete filters and screenshot defaults
   await expect(page.getByText('已选条件：', { exact: true })).toBeVisible()
   await expect(page.getByRole('button', { name: '全部撤销', exact: true })).toBeVisible()
 
-  await expectOptions(page, '区', districtOptions)
-  await expectOptions(page, '镇街', townOptions)
+  await expectOptions(page, '市', cityOptions)
   await expectOptions(page, '资产类别', assetOptions)
   await expectOptions(page, '交易模式', tradeModeOptions)
   await expectOptions(page, '公告类型', announcementOptions)
 
-  await expectSelected(page, '区', '不限')
-  await expectSelected(page, '镇街', '不限')
+  await expectSelected(page, '市', '不限')
   await expectSelected(page, '资产类别', '不限')
   await expectSelected(page, '交易模式', '不限')
   await expectSelected(page, '公告类型', '交易公告')
@@ -73,26 +66,24 @@ test('transaction dynamics page renders complete filters and screenshot defaults
   expect(referenceRequests).toEqual([])
 })
 
-test('filters stay local, keep towns complete, and reset to screenshot defaults', async ({ page }) => {
+test('filters stay local, keep Guangdong cities complete, and reset to defaults', async ({ page }) => {
   await page.goto('/transaction-dynamics')
   const originalUrl = page.url()
   const panel = page.getByTestId('transaction-filter-panel')
   const conditions = page.getByTestId('transaction-selected-conditions')
 
-  await group(page, '区').getByRole('radio', { name: '南海区', exact: true }).click()
-  await group(page, '镇街').getByRole('radio', { name: '桂城街道', exact: true }).click()
+  await group(page, '市').getByRole('radio', { name: '深圳市', exact: true }).click()
   await group(page, '资产类别').getByRole('radio', { name: '商铺', exact: true }).click()
   await group(page, '交易模式').getByRole('radio', { name: '公开协商', exact: true }).click()
   await group(page, '公告类型').getByRole('radio', { name: '结果公示', exact: true }).click()
 
-  await expect(panel).toHaveAttribute('data-district', '南海区')
-  await expect(panel).toHaveAttribute('data-town', '桂城街道')
+  await expect(panel).toHaveAttribute('data-city', '深圳市')
   await expect(panel).toHaveAttribute('data-asset-category', '商铺')
   await expect(panel).toHaveAttribute('data-trade-mode', '公开协商')
   await expect(panel).toHaveAttribute('data-announcement-type', '结果公示')
-  await expect(group(page, '镇街').getByRole('radio')).toHaveCount(townOptions.length)
+  await expect(group(page, '市').getByRole('radio')).toHaveCount(cityOptions.length)
   for (const condition of [
-    '区：南海区', '镇街：桂城街道', '资产类别：商铺', '交易模式：公开协商', '公告类型：结果公示',
+    '市：深圳市', '资产类别：商铺', '交易模式：公开协商', '公告类型：结果公示',
   ]) {
     await expect(conditions.getByText(condition, { exact: true })).toBeVisible()
   }
@@ -100,8 +91,7 @@ test('filters stay local, keep towns complete, and reset to screenshot defaults'
   await expect(page.getByTestId('transaction-dynamics-results').getByTestId('coming-soon')).toHaveCount(1)
 
   await page.getByRole('button', { name: '全部撤销', exact: true }).click()
-  await expect(panel).toHaveAttribute('data-district', '不限')
-  await expect(panel).toHaveAttribute('data-town', '不限')
+  await expect(panel).toHaveAttribute('data-city', '不限')
   await expect(panel).toHaveAttribute('data-asset-category', '不限')
   await expect(panel).toHaveAttribute('data-trade-mode', '不限')
   await expect(panel).toHaveAttribute('data-announcement-type', '交易公告')
@@ -184,7 +174,7 @@ test('transaction dynamics layout has no horizontal overflow at desktop widths',
     expect(collapsedPanelBox).not.toBeNull()
     expect(collapsedResultsBox).not.toBeNull()
     expect(collapsedResultsBox!.y).toBeGreaterThan(collapsedPanelBox!.y + collapsedPanelBox!.height)
-    await expect(group(page, '镇街').getByRole('radio', { name: '南山镇', exact: true })).toBeVisible()
+    await expect(group(page, '市').getByRole('radio', { name: '云浮市', exact: true })).toBeVisible()
     await expect(
       group(page, '资产类别').getByRole('radio', { name: '其他固定资产', exact: true }),
     ).toBeVisible()

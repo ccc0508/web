@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 import CompactFilterOptionGroup from './CompactFilterOptionGroup.vue'
+import { guangdongCityOptions } from '../config/guangdongCities'
 import {
   createDefaultTransactionDynamicsState,
   transactionAmountOptions,
   transactionAnnouncementOptions,
   transactionAssetCategoryOptions,
-  transactionDistrictOptions,
   transactionPublishDateOptions,
-  transactionTownOptions,
   transactionTradeModeOptions,
   type TransactionDynamicsFilterState,
 } from '../config/transactionDynamics'
@@ -24,8 +23,7 @@ const rangeText = (start: string, end: string) => {
 
 const selectedConditions = computed(() => {
   const labels: Array<[keyof TransactionDynamicsFilterState, string]> = [
-    ['district', '区'],
-    ['town', '镇街'],
+    ['city', '市'],
     ['assetCategory', '资产类别'],
     ['tradeMode', '交易模式'],
     ['announcementType', '公告类型'],
@@ -85,9 +83,8 @@ const confirmKeyword = () => {
     :data-announcement-type="state.announcementType"
     :data-amount="state.amount"
     :data-asset-category="state.assetCategory"
-    :data-district="state.district"
+    :data-city="state.city"
     :data-publish-date="state.publishDate"
-    :data-town="state.town"
     :data-trade-mode="state.tradeMode"
     data-testid="transaction-filter-panel"
     aria-label="交易动态筛选"
@@ -110,16 +107,10 @@ const confirmKeyword = () => {
 
     <div class="transaction-filter-panel__groups">
       <CompactFilterOptionGroup
-        v-model="state.district"
-        group-id="district"
-        label="区"
-        :options="transactionDistrictOptions"
-      />
-      <CompactFilterOptionGroup
-        v-model="state.town"
-        group-id="town"
-        label="镇街"
-        :options="transactionTownOptions"
+        v-model="state.city"
+        group-id="city"
+        label="市"
+        :options="guangdongCityOptions"
       />
       <CompactFilterOptionGroup
         v-model="state.assetCategory"

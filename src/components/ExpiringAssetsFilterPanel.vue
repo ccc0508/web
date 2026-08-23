@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 import CompactFilterOptionGroup from './CompactFilterOptionGroup.vue'
+import { guangdongCityOptions } from '../config/guangdongCities'
 import {
   createDefaultExpiringAssetsState,
   expiringAssetsCategoryOptions,
   expiringAssetsDeadlineOptions,
-  expiringAssetsDistrictOptions,
-  expiringAssetsTownOptions,
   type ExpiringAssetsFilterState,
 } from '../config/expiringAssets'
 
@@ -16,8 +15,7 @@ const isMoreExpanded = ref(false)
 
 const selectedConditions = computed(() => {
   const labels: Array<[keyof ExpiringAssetsFilterState, string]> = [
-    ['district', '区'],
-    ['town', '镇街'],
+    ['city', '市'],
     ['expiryDeadline', '到期期限'],
     ['assetCategory', '资产类别'],
   ]
@@ -46,9 +44,8 @@ const confirmKeyword = () => {
   <section
     class="expiring-assets-filter-panel"
     :data-asset-category="state.assetCategory"
-    :data-district="state.district"
+    :data-city="state.city"
     :data-expiry-deadline="state.expiryDeadline"
-    :data-town="state.town"
     data-testid="expiring-assets-filter-panel"
     aria-label="临期资产筛选"
   >
@@ -73,17 +70,10 @@ const confirmKeyword = () => {
 
     <div class="expiring-assets-filter-panel__groups">
       <CompactFilterOptionGroup
-        v-model="state.district"
-        group-id="district"
-        label="区"
-        :options="expiringAssetsDistrictOptions"
-        test-id-prefix="expiring-assets-filter"
-      />
-      <CompactFilterOptionGroup
-        v-model="state.town"
-        group-id="town"
-        label="镇街"
-        :options="expiringAssetsTownOptions"
+        v-model="state.city"
+        group-id="city"
+        label="市"
+        :options="guangdongCityOptions"
         test-id-prefix="expiring-assets-filter"
       />
       <CompactFilterOptionGroup

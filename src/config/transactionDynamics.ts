@@ -1,6 +1,5 @@
 export interface TransactionDynamicsFilterState {
-  district: string
-  town: string
+  city: string
   assetCategory: string
   tradeMode: string
   announcementType: string
@@ -13,51 +12,6 @@ export interface TransactionDynamicsFilterState {
   keyword: string
   confirmedKeyword: string
 }
-
-export const transactionDistrictOptions = [
-  '不限',
-  '禅城区',
-  '南海区',
-  '顺德区',
-  '高明区',
-  '三水区',
-] as const
-
-export const transactionTownOptions = [
-  '不限',
-  '石湾镇街道',
-  '张槎街道',
-  '祖庙街道',
-  '南庄镇',
-  '桂城街道',
-  '九江镇',
-  '西樵镇',
-  '丹灶镇',
-  '狮山镇',
-  '大沥镇',
-  '里水镇',
-  '大良街道',
-  '伦教街道',
-  '陈村镇',
-  '北滘镇',
-  '乐从镇',
-  '勒流街道',
-  '龙江镇',
-  '杏坛镇',
-  '均安镇',
-  '容桂街道',
-  '荷城街道',
-  '杨和镇',
-  '明城镇',
-  '更合镇',
-  '西南街道',
-  '大塘镇',
-  '乐平镇',
-  '白坭镇',
-  '芦苞镇',
-  '云东海街道',
-  '南山镇',
-] as const
 
 export const transactionAssetCategoryOptions = [
   '不限',
@@ -118,8 +72,7 @@ export const transactionPublishDateOptions = [
 ] as const
 
 export const createDefaultTransactionDynamicsState = (): TransactionDynamicsFilterState => ({
-  district: '不限',
-  town: '不限',
+  city: '不限',
   assetCategory: '不限',
   tradeMode: '不限',
   announcementType: '交易公告',

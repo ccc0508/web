@@ -23,11 +23,17 @@ import 'leaflet/dist/leaflet.css'
 import ProjectMapFilterBar from '../components/ProjectMapFilterBar.vue'
 import ProjectMapResults from '../components/ProjectMapResults.vue'
 import RegionSelectModal from '../components/RegionSelectModal.vue'
-import { guangdongMapCenter, guangdongMapZoom } from '../config/projectMap'
+import {
+  guangdongMapCenter,
+  guangdongMapZoom,
+  projectMapMaxNativeZoom,
+  projectMapMaxZoom,
+} from '../config/projectMap'
 
 /* ── 地图相关 ── */
 const mapContainer = ref<HTMLElement>()
 let map: L.Map | null = null
+let mapResizeObserver: ResizeObserver | null = null
 
 onMounted(() => {
   if (!mapContainer.value) return
@@ -35,6 +41,7 @@ onMounted(() => {
   map = L.map(mapContainer.value, {
     center: guangdongMapCenter,
     zoom: guangdongMapZoom,
+    maxZoom: projectMapMaxZoom,
     zoomControl: true,
     scrollWheelZoom: true,
     dragging: true,
@@ -47,14 +54,23 @@ onMounted(() => {
   L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
     subdomains: ['1', '2', '3', '4'],
     attribution: '&copy; AutoNavi',
-    maxZoom: 18,
+    maxNativeZoom: projectMapMaxNativeZoom,
+    maxZoom: projectMapMaxZoom,
   }).addTo(map)
 
   // 修复 Leaflet 在 flex 布局中初次渲染尺寸不正确的问题
   setTimeout(() => map?.invalidateSize(), 200)
+
+  // 浏览器缩放、窗口最大化或左右区域尺寸变化后，重新计算地图画布大小。
+  mapResizeObserver = new ResizeObserver(() => {
+    map?.invalidateSize({ animate: false })
+  })
+  mapResizeObserver.observe(mapContainer.value)
 })
 
 onUnmounted(() => {
+  mapResizeObserver?.disconnect()
+  mapResizeObserver = null
   map?.remove()
   map = null
 })
@@ -144,6 +160,26 @@ const handleRegionConfirm = (region: string) => {
     display: flex;
     flex-direction: column;
     min-height: 0;
+  }
+}
+
+/* 浏览器高倍缩放时优先保留地图，避免固定宽度结果栏挤占整个视口。 */
+@media (max-width: 760px) {
+  .project-map-page {
+    &__workspace {
+      position: relative;
+      display: block;
+    }
+
+    &__map-area {
+      width: 100%;
+      height: 100%;
+    }
+
+    &__divider,
+    &__results-area {
+      display: none;
+    }
   }
 }
 

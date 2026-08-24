@@ -81,3 +81,9 @@ export const guangdongMapCenter: [number, number] = [23.13, 113.26]
 
 /** 广东省地图默认缩放级别 */
 export const guangdongMapZoom = 7
+
+/** 地图允许的最大缩放级别 */
+export const projectMapMaxZoom = 18
+
+/** 高德底图稳定提供的原生瓦片层级；更高层级由 Leaflet 平滑放大 */
+export const projectMapMaxNativeZoom = 17

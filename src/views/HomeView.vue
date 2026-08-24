@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import BackToTop from '../components/BackToTop.vue'
 import BusinessDataSection from '../components/BusinessDataSection.vue'
-import EmptyState from '../components/EmptyState.vue'
 import InformationTabs from '../components/InformationTabs.vue'
 import PrimaryNav from '../components/PrimaryNav.vue'
 import SectionHeader from '../components/SectionHeader.vue'
@@ -53,6 +52,29 @@ const businessSections = [
     titleLead: '农村',
     titleRest: '工程和采购',
     tabs: ['交易公告', '结果公示', '成交公告', '其他公告'],
+  },
+]
+
+const websiteLinks = [
+  {
+    label: '佛山市人民政府',
+    url: 'http://www.foshan.gov.cn/',
+    theme: 'orange',
+  },
+  {
+    label: '佛山市农业农村局',
+    url: 'http://fsny.foshan.gov.cn/',
+    theme: 'blue',
+  },
+  {
+    label: '广东省公共资源交易平台',
+    url: 'https://ygp.gdzwfw.gov.cn/ggzy-portal/#/440600/index',
+    theme: 'green',
+  },
+  {
+    label: '广东省农村产权流转交易管理服务平台',
+    url: 'https://cqjy.gdagri.gov.cn/',
+    theme: 'orange',
   },
 ]
 
@@ -134,7 +156,19 @@ const businessSections = [
 
         <section class="portal-card website-nav" aria-label="网站导航">
           <SectionHeader eyebrow="Website navigation" title="网站导航" />
-          <EmptyState />
+          <nav class="website-nav__links" aria-label="相关政府网站">
+            <a
+              v-for="link in websiteLinks"
+              :key="link.label"
+              :class="['website-nav__link', `website-nav__link--${link.theme}`]"
+              :href="link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>{{ link.label }}</span>
+              <i aria-hidden="true"></i>
+            </a>
+          </nav>
         </section>
 
         <div class="homepage__end" aria-hidden="true">
@@ -362,8 +396,90 @@ const businessSections = [
 }
 
 .website-nav {
-  min-height: 255px;
   margin-top: 20px;
+
+  &__links {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    padding: 26px 18px 34px;
+  }
+
+  &__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    height: 100px;
+    overflow: hidden;
+    padding: 0 24px;
+    color: #fff;
+    background: linear-gradient(110deg, #f67918, #ffa932);
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+
+    span {
+      position: relative;
+      z-index: 2;
+      white-space: nowrap;
+    }
+
+    i,
+    &::before,
+    &::after {
+      position: absolute;
+      content: '';
+      pointer-events: none;
+    }
+
+    &::before {
+      top: 26px;
+      right: 28px;
+      width: 44px;
+      height: 44px;
+      border: 6px solid rgb(255 255 255 / 12%);
+      border-radius: 50%;
+    }
+
+    &::after {
+      top: 0;
+      right: 42px;
+      width: 58px;
+      height: 100%;
+      background: rgb(255 255 255 / 7%);
+      transform: skewX(-18deg);
+    }
+
+    i {
+      right: 14px;
+      bottom: -28px;
+      width: 76px;
+      height: 76px;
+      border: 10px solid rgb(255 255 255 / 8%);
+      transform: rotate(45deg);
+    }
+
+    &--blue {
+      background: linear-gradient(110deg, #0876f8, #04a3f4);
+    }
+
+    &--green {
+      background: linear-gradient(110deg, #3c9b87, #70d5bd);
+    }
+
+    &:hover {
+      filter: brightness(1.04);
+      box-shadow: 0 8px 18px rgb(82 50 35 / 18%);
+      transform: translateY(-2px);
+    }
+
+    &:focus-visible {
+      outline: 3px solid #b9151d;
+      outline-offset: 3px;
+    }
+  }
 }
 
 @media (max-width: 1399px) {
@@ -379,6 +495,23 @@ const businessSections = [
 
   .map-card__canvas svg {
     height: 266px;
+  }
+
+  .website-nav {
+    &__links {
+      gap: 18px;
+    }
+
+    &__link {
+      padding-inline: 18px;
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .website-nav__links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 </style>

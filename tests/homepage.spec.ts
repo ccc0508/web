@@ -16,6 +16,8 @@ test('homepage renders all required static content without reference-site reques
   await expect(page.getByText('您好，欢迎来到广东省农村集体“三资”智慧云平台！', { exact: true })).toBeVisible()
   await expect(page.getByRole('heading', { name: '广东省农村集体“三资”智慧云平台' })).toBeVisible()
   await expect(page.getByText('广东省农村产权流转交易管理服务平台', { exact: true })).toBeVisible()
+  await expect(page.locator('.brand-emblem img')).toHaveAttribute('src', '/assets/fahu-xiangzi-logo.png')
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/assets/fahu-xiangzi-logo.png')
   await expect(page.getByRole('img', { name: '广东省静态示意地图' })).toBeVisible()
   await expect(page.getByAltText('首页轮播占位图')).toHaveAttribute('src', '/assets/carousel-placeholder.jpg')
   await expect(page.getByText('暂无公开数据', { exact: true })).toHaveCount(5)

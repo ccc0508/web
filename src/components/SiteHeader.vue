@@ -54,10 +54,7 @@ const goToProjectMap = () => router.push('/project-map')
       <div class="site-container brand-hero__inner">
         <div :class="['brand-lockup', { 'brand-lockup--trade-hall': isTradeHall }]">
           <div class="brand-emblem" aria-hidden="true">
-            <span class="brand-emblem__sun"></span>
-            <span class="brand-emblem__field brand-emblem__field--one"></span>
-            <span class="brand-emblem__field brand-emblem__field--two"></span>
-            <span class="brand-emblem__field brand-emblem__field--three"></span>
+            <img alt="" src="/assets/fahu-xiangzi-logo.png" />
           </div>
           <div class="brand-lockup__copy">
             <p class="brand-lockup__slogan">{{ headerCopy.slogan }}</p>
@@ -243,35 +240,16 @@ const goToProjectMap = () => router.push('/project-map')
 }
 
 .brand-emblem {
-  position: relative;
-  width: 88px;
-  height: 86px;
-  margin-right: 26px;
-  transform: translateY(5px);
+  width: 104px;
+  height: 104px;
+  flex: 0 0 auto;
+  margin-right: 22px;
 
-  &__sun {
-    position: absolute;
-    top: 5px;
-    left: 32px;
-    width: 23px;
-    height: 23px;
-    border: 5px solid #c41b24;
-    border-radius: 50%;
-  }
-
-  &__field {
-    position: absolute;
-    left: 5px;
-    width: 78px;
-    height: 42px;
-    border: 8px solid transparent;
-    border-top-color: #c41b24;
-    border-radius: 50%;
-    transform: rotate(-7deg);
-
-    &--one { top: 34px; }
-    &--two { top: 49px; transform: rotate(7deg); }
-    &--three { top: 64px; transform: rotate(-2deg); }
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 }
 

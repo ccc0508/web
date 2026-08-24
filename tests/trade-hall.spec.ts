@@ -32,6 +32,7 @@ test('trade hall renders the exact first-screen copy and local-only controls', a
   await expect(
     page.getByRole('heading', { name: '佛山市农村集体“三资”智慧云平台交易系统', exact: true }),
   ).toBeVisible()
+  await expect(page.locator('.brand-emblem img')).toHaveAttribute('src', '/assets/fahu-xiangzi-logo.png')
   await expect(page.getByText('佛山市农村产权流转交易管理服务平台', { exact: true })).toBeVisible()
   await expect(page.getByText('科技赋能未来乡村、数字赋能乡村振兴', { exact: true })).toBeVisible()
 

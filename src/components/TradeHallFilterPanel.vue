@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue'
 import FilterOptionGroup from './FilterOptionGroup.vue'
+import { guangdongCityOptions } from '../config/guangdongCities'
 import {
   assetCategoryOptions,
   createDefaultFilterState,
-  districtOptions,
   priceOptions,
   timeOptions,
   tradeModes,
@@ -45,7 +45,7 @@ const selectedTags = computed<string[]>(() => {
     }
   }
 
-  appendGroup('所属区', state.district)
+  appendGroup('所属市', state.city)
   appendGroup('资产类别', state.assetCategory)
   appendGroup('交易类别', state.transactionType)
   appendGroup(currentMode.value.statusLabel, state.status)
@@ -113,9 +113,9 @@ const selectedTags = computed<string[]>(() => {
         :options="currentMode.negotiationMethods"
       />
       <FilterOptionGroup
-        v-model="state.district"
-        label="所属区"
-        :options="districtOptions"
+        v-model="state.city"
+        label="所属市"
+        :options="guangdongCityOptions"
       />
       <FilterOptionGroup
         v-model="state.assetCategory"

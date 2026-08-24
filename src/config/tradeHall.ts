@@ -18,7 +18,7 @@ export interface TradeMode {
 }
 
 export interface TradeFilterState {
-  district: string
+  city: string
   assetCategory: string
   transactionType: string
   status: string
@@ -34,8 +34,6 @@ export interface TradeFilterState {
   customPublishDateEnd: string
   keyword: string
 }
-
-export const districtOptions = ['不限', '禅城区', '南海区', '顺德区', '高明区', '三水区']
 
 export const assetCategoryOptions = [
   '不限',
@@ -122,7 +120,7 @@ export const tradeModes: TradeMode[] = [
 ]
 
 export const createDefaultFilterState = (): TradeFilterState => ({
-  district: '不限',
+  city: '不限',
   assetCategory: '不限',
   transactionType: '不限',
   status: '不限',

@@ -209,13 +209,16 @@ test('four public bidding modes share the complete common filter set', async ({ 
     await filterPanel(page)
       .locator('[role="radiogroup"]')
       .evaluateAll((groups) => groups.map((group) => group.getAttribute('aria-label'))),
-  ).toEqual(['交易类别', '交易状态', '所属区', '资产类别', '交易底价', '交易时间', '发布日期'])
+  ).toEqual(['交易类别', '交易状态', '所属市', '资产类别', '交易底价', '交易时间', '发布日期'])
 
   const verifyMode = async (label: string) => {
     await page.getByRole('tab', { name: label, exact: true }).click()
     await expect(
-      page.getByRole('radiogroup', { name: '所属区' }).locator('[role="radio"]'),
-    ).toHaveText(['不限', '禅城区', '南海区', '顺德区', '高明区', '三水区'])
+      page.getByRole('radiogroup', { name: '所属市' }).locator('[role="radio"]'),
+    ).toHaveText([
+      '不限', '广州市', '韶关市', '深圳市', '珠海市', '汕头市', '佛山市', '江门市', '湛江市', '茂名市', '肇庆市',
+      '惠州市', '梅州市', '汕尾市', '河源市', '阳江市', '清远市', '东莞市', '中山市', '潮州市', '揭阳市', '云浮市',
+    ])
     await expect(
       page.getByRole('radiogroup', { name: '资产类别' }).locator('[role="radio"]'),
     ).toHaveText([
@@ -319,36 +322,36 @@ test('priced rental mode shows rental-specific statuses', async ({ page }) => {
 test('filter options are single-select and selected conditions stay in sync', async ({ page }) => {
   await page.goto('/trade-hall')
 
-  const district = page.getByRole('radiogroup', { name: '所属区' })
-  await expect(district.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute(
+  const city = page.getByRole('radiogroup', { name: '所属市' })
+  await expect(city.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute(
     'aria-checked',
     'true',
   )
 
-  await district.getByRole('radio', { name: '南海区', exact: true }).click()
-  await expect(district.getByRole('radio', { name: '南海区', exact: true })).toHaveAttribute(
+  await city.getByRole('radio', { name: '深圳市', exact: true }).click()
+  await expect(city.getByRole('radio', { name: '深圳市', exact: true })).toHaveAttribute(
     'aria-checked',
     'true',
   )
-  await expect(district.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute(
+  await expect(city.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute(
     'aria-checked',
     'false',
   )
-  await expect(district.getByRole('radio', { name: '南海区', exact: true })).toHaveCSS(
+  await expect(city.getByRole('radio', { name: '深圳市', exact: true })).toHaveCSS(
     'background-color',
     'rgb(239, 57, 47)',
   )
 
-  await district.getByRole('radio', { name: '顺德区', exact: true }).click()
-  await expect(district.getByRole('radio', { name: '南海区', exact: true })).toHaveAttribute(
+  await city.getByRole('radio', { name: '珠海市', exact: true }).click()
+  await expect(city.getByRole('radio', { name: '深圳市', exact: true })).toHaveAttribute(
     'aria-checked',
     'false',
   )
-  await expect(district.getByRole('radio', { name: '顺德区', exact: true })).toHaveAttribute(
+  await expect(city.getByRole('radio', { name: '珠海市', exact: true })).toHaveAttribute(
     'aria-checked',
     'true',
   )
-  await expect(selectedConditions(page)).toContainText('所属区：顺德区')
+  await expect(selectedConditions(page)).toContainText('所属市：珠海市')
 
   await page.getByRole('radiogroup', { name: '资产类别' }).getByRole('radio', { name: '耕地', exact: true }).click()
   await page.getByRole('radiogroup', { name: '交易类别' }).getByRole('radio', { name: '出租', exact: true }).click()
@@ -371,9 +374,9 @@ test('filter options are single-select and selected conditions stay in sync', as
 test('clear restores the default filter state', async ({ page }) => {
   await page.goto('/trade-hall')
 
-  const district = page.getByRole('radiogroup', { name: '所属区' })
+  const city = page.getByRole('radiogroup', { name: '所属市' })
   const priceGroup = page.getByRole('radiogroup', { name: '交易底价' })
-  await district.getByRole('radio', { name: '南海区', exact: true }).click()
+  await city.getByRole('radio', { name: '深圳市', exact: true }).click()
   await page.getByRole('radiogroup', { name: '交易类别' }).getByRole('radio', { name: '出租', exact: true }).click()
   await priceGroup.getByRole('radio', { name: '自定义金额', exact: true }).click()
   await priceGroup.getByLabel('起始金额').fill('100')
@@ -381,16 +384,16 @@ test('clear restores the default filter state', async ({ page }) => {
   await page.getByRole('radiogroup', { name: '交易时间' }).getByRole('radio', { name: '自定义日期', exact: true }).click()
   await page.getByLabel('关键字输入').fill('鱼塘')
 
-  await expect(selectedConditions(page)).toContainText('南海区')
+  await expect(selectedConditions(page)).toContainText('深圳市')
   await filterPanel(page).getByRole('button', { name: '清除', exact: true }).click()
 
-  await expect(district.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute('aria-checked', 'true')
-  await expect(district.getByRole('radio', { name: '南海区', exact: true })).toHaveAttribute('aria-checked', 'false')
+  await expect(city.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute('aria-checked', 'true')
+  await expect(city.getByRole('radio', { name: '深圳市', exact: true })).toHaveAttribute('aria-checked', 'false')
   await expect(priceGroup.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute('aria-checked', 'true')
   await expect(page.getByLabel('起始金额')).toHaveValue('')
   await expect(page.getByLabel('结束金额')).toHaveValue('')
   await expect(page.getByLabel('关键字输入')).toHaveValue('')
-  await expect(selectedConditions(page)).not.toContainText('南海区')
+  await expect(selectedConditions(page)).not.toContainText('深圳市')
   await expect(selectedConditions(page)).not.toContainText('自定义金额')
   await expect(selectedConditions(page)).not.toContainText('关键字')
 })
@@ -478,24 +481,24 @@ test('keyword input keeps local state', async ({ page }) => {
 test('switching modes resets every filter and custom input', async ({ page }) => {
   await page.goto('/trade-hall')
 
-  const district = page.getByRole('radiogroup', { name: '所属区' })
+  const city = page.getByRole('radiogroup', { name: '所属市' })
   const priceGroup = page.getByRole('radiogroup', { name: '交易底价' })
-  await district.getByRole('radio', { name: '南海区', exact: true }).click()
+  await city.getByRole('radio', { name: '深圳市', exact: true }).click()
   await priceGroup.getByRole('radio', { name: '自定义金额', exact: true }).click()
   await priceGroup.getByLabel('起始金额').fill('100')
   await priceGroup.getByLabel('结束金额').fill('200')
   await page.getByLabel('关键字输入').fill('鱼塘')
-  await expect(selectedConditions(page)).toContainText('南海区')
+  await expect(selectedConditions(page)).toContainText('深圳市')
 
   await page.getByRole('tab', { name: '公开协商', exact: true }).click()
 
-  await expect(district.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute('aria-checked', 'true')
-  await expect(district.getByRole('radio', { name: '南海区', exact: true })).toHaveAttribute('aria-checked', 'false')
+  await expect(city.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute('aria-checked', 'true')
+  await expect(city.getByRole('radio', { name: '深圳市', exact: true })).toHaveAttribute('aria-checked', 'false')
   await expect(priceGroup.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute('aria-checked', 'true')
   await expect(page.getByLabel('起始金额')).toHaveValue('')
   await expect(page.getByLabel('结束金额')).toHaveValue('')
   await expect(page.getByLabel('关键字输入')).toHaveValue('')
-  await expect(selectedConditions(page)).not.toContainText('南海区')
+  await expect(selectedConditions(page)).not.toContainText('深圳市')
   await expect(selectedConditions(page)).not.toContainText('自定义金额')
   await expect(selectedConditions(page)).not.toContainText('关键字')
   await expect(page.getByRole('radiogroup', { name: '协商方式' })).toBeVisible()
@@ -505,8 +508,8 @@ test('switching modes resets every filter and custom input', async ({ page }) =>
 test('refreshing the page restores the default trade hall state', async ({ page }) => {
   await page.goto('/trade-hall')
 
-  const district = page.getByRole('radiogroup', { name: '所属区' })
-  await district.getByRole('radio', { name: '南海区', exact: true }).click()
+  const city = page.getByRole('radiogroup', { name: '所属市' })
+  await city.getByRole('radio', { name: '深圳市', exact: true }).click()
   await page.getByRole('tab', { name: '公开协商', exact: true }).click()
   await page.getByLabel('关键字输入').fill('鱼塘')
   await tradeHallNav(page).getByRole('button', { name: '会员中心', exact: true }).click()
@@ -520,16 +523,16 @@ test('refreshing the page restores the default trade hall state', async ({ page 
     'aria-selected',
     'true',
   )
-  await expect(district.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute(
+  await expect(city.getByRole('radio', { name: '不限', exact: true })).toHaveAttribute(
     'aria-checked',
     'true',
   )
-  await expect(district.getByRole('radio', { name: '南海区', exact: true })).toHaveAttribute(
+  await expect(city.getByRole('radio', { name: '深圳市', exact: true })).toHaveAttribute(
     'aria-checked',
     'false',
   )
   await expect(page.getByLabel('关键字输入')).toHaveValue('')
-  await expect(selectedConditions(page)).not.toContainText('南海区')
+  await expect(selectedConditions(page)).not.toContainText('深圳市')
 })
 
 test('results always show coming soon and never real project data', async ({ page }) => {
@@ -540,7 +543,7 @@ test('results always show coming soon and never real project data', async ({ pag
     await expectComingSoon(tradeHallResults(page))
   }
 
-  await page.getByRole('radiogroup', { name: '所属区' }).getByRole('radio', { name: '顺德区', exact: true }).click()
+  await page.getByRole('radiogroup', { name: '所属市' }).getByRole('radio', { name: '珠海市', exact: true }).click()
   await page.getByRole('radiogroup', { name: '资产类别' }).getByRole('radio', { name: '厂房', exact: true }).click()
   await page.getByRole('radiogroup', { name: '交易底价' }).getByRole('radio', { name: '10000以上', exact: true }).click()
   await page.getByLabel('关键字输入').fill('鱼塘')
@@ -574,7 +577,7 @@ test('trade hall interactions never change the URL', async ({ page }) => {
   await page.goto('/trade-hall')
   const originalUrl = page.url()
 
-  await page.getByRole('radiogroup', { name: '所属区' }).getByRole('radio', { name: '南海区', exact: true }).click()
+  await page.getByRole('radiogroup', { name: '所属市' }).getByRole('radio', { name: '深圳市', exact: true }).click()
   await page.getByRole('radiogroup', { name: '交易底价' }).getByRole('radio', { name: '自定义金额', exact: true }).click()
   await page.getByLabel('起始金额').fill('100')
   await page.getByRole('radiogroup', { name: '交易时间' }).getByRole('radio', { name: '自定义日期', exact: true }).click()
@@ -604,7 +607,7 @@ test('trade hall never calls reference or business APIs', async ({ page }) => {
   for (const label of modeLabels) {
     await page.getByRole('tab', { name: label, exact: true }).click()
   }
-  await page.getByRole('radiogroup', { name: '所属区' }).getByRole('radio', { name: '顺德区', exact: true }).click()
+  await page.getByRole('radiogroup', { name: '所属市' }).getByRole('radio', { name: '珠海市', exact: true }).click()
   await page.getByRole('radiogroup', { name: '交易底价' }).getByRole('radio', { name: '自定义金额', exact: true }).click()
   await page.getByLabel('起始金额').fill('100')
   await page.getByLabel('关键字输入').fill('鱼塘')

@@ -40,14 +40,11 @@ const handleSearch = () => undefined
     <!-- 左侧：平台品牌 -->
     <div class="filter-bar__brand">
       <div class="filter-bar__emblem" aria-hidden="true">
-        <span class="filter-bar__sun"></span>
-        <span class="filter-bar__field filter-bar__field--one"></span>
-        <span class="filter-bar__field filter-bar__field--two"></span>
-        <span class="filter-bar__field filter-bar__field--three"></span>
+        <img alt="" src="/assets/fahu-xiangzi-logo.png" />
       </div>
       <div class="filter-bar__brand-text">
-        <strong>佛山市农村集体"三资"智慧云平台</strong>
-        <p>佛山市农村产权流转交易管理服务平台</p>
+        <strong>广东省农村集体“三资”智慧云平台</strong>
+        <p>广东省农村产权流转交易管理服务平台</p>
       </div>
     </div>
 
@@ -153,35 +150,16 @@ const handleSearch = () => undefined
   }
 
   &__emblem {
-    position: relative;
-    width: 44px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
     flex-shrink: 0;
-  }
 
-  &__sun {
-    position: absolute;
-    top: 2px;
-    left: 16px;
-    width: 12px;
-    height: 12px;
-    border: 3px solid #c41b24;
-    border-radius: 50%;
-  }
-
-  &__field {
-    position: absolute;
-    left: 2px;
-    width: 40px;
-    height: 21px;
-    border: 5px solid transparent;
-    border-top-color: #c41b24;
-    border-radius: 50%;
-    transform: rotate(-7deg);
-
-    &--one { top: 16px; }
-    &--two { top: 24px; transform: rotate(7deg); }
-    &--three { top: 32px; transform: rotate(-2deg); }
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   }
 
   &__brand-text {

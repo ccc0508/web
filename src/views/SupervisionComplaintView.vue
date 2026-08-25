@@ -1,58 +1,91 @@
+<script setup lang="ts">
+import BackToTop from '../components/BackToTop.vue'
+import PrimaryNav from '../components/PrimaryNav.vue'
+import SiteHeader from '../components/SiteHeader.vue'
+</script>
+
 <template>
   <div class="complaint-page">
-    <nav class="complaint-page__breadcrumb" aria-label="当前位置">
-      <div class="site-container complaint-page__breadcrumb-inner">
-        <span class="complaint-page__location" aria-hidden="true"></span>
-        <span>当前位置</span>
-        <RouterLink to="/">首页</RouterLink>
-        <span>/</span>
-        <span>监督投诉</span>
+    <SiteHeader />
+    <PrimaryNav />
+
+    <main class="complaint-page__main">
+      <nav class="complaint-page__breadcrumb" aria-label="当前位置">
+        <div class="site-container complaint-page__breadcrumb-inner">
+          <span class="complaint-page__location" aria-hidden="true"></span>
+          <span>当前位置</span>
+          <RouterLink to="/">首页</RouterLink>
+          <span>/</span>
+          <span>监督投诉</span>
+        </div>
+      </nav>
+
+      <div class="site-container complaint-page__body">
+        <article class="complaint-article">
+          <h1>监督投诉</h1>
+          <div class="complaint-article__meta">
+            <span>来源：本网</span>
+            <span>时间：2023-08-21 11:11:12</span>
+          </div>
+
+          <div class="complaint-article__content">
+            <section>
+              <h2>一、政务咨询</h2>
+              <p>咨询电话：0757-12345</p>
+              <p>
+                网上咨询：
+                <a href="http://www.foshan.gov.cn/hdjlpt/zixun" rel="noopener noreferrer" target="_blank">
+                  http://www.foshan.gov.cn/hdjlpt/zixun
+                </a>
+              </p>
+              <p>联系地址：佛山市禅城区岭南大道北12号11号楼，邮编：528000</p>
+            </section>
+
+            <section>
+              <h2>二、政务投诉</h2>
+              <p>对党组织、党员违反党的纪律行为以及监察对象职务违法、职务犯罪行为请向佛山市纪委监委反映。</p>
+              <p>举报电话：0757-12388</p>
+              <p>
+                网上举报：
+                <a href="https://guangdong.12388.gov.cn/foshanshi/" rel="noopener noreferrer" target="_blank">
+                  https://guangdong.12388.gov.cn/foshanshi/
+                </a>
+              </p>
+            </section>
+          </div>
+        </article>
+
+        <aside class="complaint-sidebar" aria-label="相关栏目">
+          <nav class="complaint-sidebar__nav">
+            <span>关于我们 <i aria-hidden="true">›</i></span>
+            <span>里程碑事件 <i aria-hidden="true">›</i></span>
+            <span class="is-active">监督投诉 <i aria-hidden="true">›</i></span>
+          </nav>
+          <div class="complaint-sidebar__service">
+            <small>政务服务入口</small>
+            <img alt="法护乡资" src="/assets/fahu-xiangzi-logo.png" />
+            <strong>广东三资</strong>
+          </div>
+        </aside>
       </div>
-    </nav>
-
-    <main class="site-container complaint-page__main">
-      <article class="complaint-article">
-        <h1>监督投诉</h1>
-        <div class="complaint-article__meta">
-          <span>来源：本网</span>
-          <span>时间：2023-08-21 11:11:12</span>
-        </div>
-
-        <div class="complaint-article__content">
-          <section>
-            <h2>一、政务咨询</h2>
-            <p>咨询电话：0757-12345</p>
-            <p>
-              网上咨询：
-              <a href="http://www.foshan.gov.cn/hdjlpt/zixun" rel="noopener noreferrer" target="_blank">
-                http://www.foshan.gov.cn/hdjlpt/zixun
-              </a>
-            </p>
-            <p>联系地址：佛山市禅城区岭南大道北12号11号楼，邮编：528000</p>
-          </section>
-
-          <section>
-            <h2>二、政务投诉</h2>
-            <p>对党组织、党员违反党的纪律行为以及监察对象职务违法、职务犯罪行为请向佛山市纪委监委反映。</p>
-            <p>举报电话：0757-12388</p>
-            <p>
-              网上举报：
-              <a href="https://guangdong.12388.gov.cn/foshanshi/" rel="noopener noreferrer" target="_blank">
-                https://guangdong.12388.gov.cn/foshanshi/
-              </a>
-            </p>
-          </section>
-        </div>
-      </article>
     </main>
+
+    <BackToTop />
   </div>
 </template>
 
 <style scoped lang="scss">
 .complaint-page {
   min-height: 100vh;
-  background: #f7f4f3;
-  border-top: 3px solid #c9141d;
+  background: #fff;
+
+  &__main {
+    min-height: 700px;
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 80%), rgb(255 249 247 / 94%)),
+      var(--page-warm);
+    border-top: 3px solid #c9141d;
+  }
 
   &__breadcrumb {
     height: 52px;
@@ -99,15 +132,84 @@
     }
   }
 
-  &__main {
-    padding: 0 0 26px;
+  &__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 230px;
+    gap: 28px;
+    width: 1200px;
+    min-height: 600px;
+    padding: 30px 0 54px;
+  }
+}
+
+.complaint-sidebar {
+  padding-top: 0;
+
+  &__nav {
+    display: grid;
+    gap: 10px;
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 48px;
+      padding: 0 20px;
+      color: #403a36;
+      background: #fff5df;
+      border-left: 4px solid #e1dedb;
+      border-radius: 0 6px 6px 0;
+      font-size: 16px;
+      font-weight: 700;
+
+      &.is-active {
+        color: #fff;
+        background: linear-gradient(90deg, #f13727, #e52b21);
+        border-left-color: #f4ad16;
+      }
+
+      i {
+        color: #cfc5bc;
+        font-size: 22px;
+        font-style: normal;
+      }
+    }
+  }
+
+  &__service {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 24px;
+    padding: 16px 12px 18px;
     background: #fff;
+    border: 1px solid #eee7e2;
+
+    small {
+      align-self: flex-start;
+      color: #6f6863;
+      font-size: 13px;
+    }
+
+    img {
+      width: 105px;
+      height: 105px;
+      margin: 12px 0 5px;
+      object-fit: contain;
+    }
+
+    strong {
+      color: #201d1b;
+      font-size: 18px;
+    }
   }
 }
 
 .complaint-article {
-  min-height: 545px;
-  padding: 58px 68px 66px;
+  min-height: 600px;
+  padding: 60px 64px 66px;
+  background: #fff;
+  border: 1px solid #f0ece9;
 
   h1 {
     margin: 0;
@@ -127,7 +229,7 @@
   }
 
   &__content {
-    margin-top: 32px;
+    margin-top: 34px;
     color: #080808;
     font-size: 18px;
     line-height: 1.9;

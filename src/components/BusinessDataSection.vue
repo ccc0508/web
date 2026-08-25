@@ -30,6 +30,19 @@ interface ExpiringAssetRecord {
   image: string
 }
 
+interface TransactionDetail {
+  label: string
+  value: string
+}
+
+interface TransactionRecord {
+  category?: string
+  region: string
+  title: string
+  image: string
+  details: TransactionDetail[]
+}
+
 const props = withDefaults(
   defineProps<{
     sectionId: string
@@ -40,6 +53,7 @@ const props = withDefaults(
     districts?: DistrictItem[]
     records?: Record<string, ProjectRecord[]>
     assetRecords?: Record<string, ExpiringAssetRecord[]>
+    transactionRecords?: Record<string, TransactionRecord[]>
   }>(),
   {
     tabs: () => [],
@@ -47,6 +61,7 @@ const props = withDefaults(
     districts: () => [],
     records: () => ({}),
     assetRecords: () => ({}),
+    transactionRecords: () => ({}),
   },
 )
 
@@ -55,7 +70,10 @@ const activeControl = ref(initialControl)
 const fullTitle = computed(() => `${props.titleLead}${props.titleRest}`)
 const activeRecords = computed(() => props.records[activeControl.value] ?? [])
 const activeAssetRecords = computed(() => props.assetRecords[activeControl.value] ?? [])
-const hasAssetRecords = computed(() => Object.keys(props.assetRecords).length > 0)
+const activeTransactionRecords = computed(() => props.transactionRecords[activeControl.value] ?? [])
+const hasDisplayCards = computed(() =>
+  Object.keys(props.assetRecords).length > 0 || Object.keys(props.transactionRecords).length > 0,
+)
 const categoryOffset = ref(0)
 const categoryDirection = ref<'next' | 'previous'>('next')
 const visibleCategoryCount = computed(() => Math.min(7, props.categories.length))
@@ -134,7 +152,7 @@ const slideCategories = (step: -1 | 1) => {
               :key="category.label"
               :aria-pressed="activeControl === category.label"
               class="business-section__category"
-              :disabled="hasAssetRecords"
+              :disabled="hasDisplayCards"
               :data-testid="`${sectionId}-category-${category.label}`"
               :style="{ '--category-color': category.color }"
               type="button"
@@ -175,7 +193,27 @@ const slideCategories = (step: -1 | 1) => {
       </button>
     </div>
 
-    <div v-if="activeAssetRecords.length" class="business-section__asset-grid" aria-live="polite">
+    <div v-if="activeTransactionRecords.length" class="business-section__asset-grid" aria-live="polite">
+      <article
+        v-for="record in activeTransactionRecords"
+        :key="`${record.title}-${record.region}`"
+        class="business-section__asset-card"
+      >
+        <div class="business-section__asset-media">
+          <img :alt="record.title" :src="record.image" loading="lazy" />
+          <span>{{ record.region }}</span>
+        </div>
+        <p class="business-section__asset-category">{{ record.category || '资产交易' }}</p>
+        <div class="business-section__asset-body business-section__asset-body--transaction">
+          <h3>{{ record.title }}</h3>
+          <p v-for="detail in record.details" :key="detail.label">
+            <strong>{{ detail.label }}：</strong><span>{{ detail.value }}</span>
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <div v-else-if="activeAssetRecords.length" class="business-section__asset-grid" aria-live="polite">
       <article
         v-for="asset in activeAssetRecords"
         :key="`${asset.title}-${asset.expiryDate}`"
@@ -642,6 +680,10 @@ const slideCategories = (step: -1 | 1) => {
         text-overflow: ellipsis;
         white-space: nowrap;
       }
+    }
+
+    &--transaction {
+      min-height: 156px;
     }
   }
 

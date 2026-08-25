@@ -73,12 +73,48 @@ const expiringAssetRecords = {
   ],
 }
 
+const transactionAssetRecords = {
+  交易公告: [
+    { category: '工矿仓储用地', region: '高明区/荷城街道/南洲村', title: '新庄二社庙门口厂房及地块出租', image: '/assets/transaction/transaction-01.jpg', details: [{ label: '权属单位', value: '佛山市高明区荷城街道南洲村新庄二组集体经济组织' }, { label: '交易底价', value: '90000.00元/宗/季' }, { label: '报名时间', value: '2026-08-26 12:00 - 2026-08-31 12:00' }, { label: '竞投时间', value: '2026-09-01 09:30' }] },
+    { category: '商住楼', region: '禅城区/祖庙街道/朝东村', title: '大豆南桂西路30号二楼201、202、203商住楼出租', image: '/assets/transaction/transaction-02.jpg', details: [{ label: '权属单位', value: '佛山市禅城区祖庙街道朝东村大豆组集体经济组织' }, { label: '交易底价', value: '16285.00元/宗/月' }, { label: '报名时间', value: '2026-08-26 12:00 - 2026-08-31 12:00' }, { label: '竞投时间', value: '2026-09-01 10:00' }] },
+    { category: '商铺', region: '禅城区/祖庙街道/敦厚村', title: '村内四组物业原五金配件厂侧[45020-3]商铺出租', image: '/assets/transaction/transaction-03.jpg', details: [{ label: '权属单位', value: '佛山市禅城区祖庙街道敦厚村集体经济组织' }, { label: '交易底价', value: '22.00元/平方米/月' }, { label: '报名时间', value: '2026-08-26 12:00 - 2026-08-31 12:00' }, { label: '竞投时间', value: '2026-09-01 10:00' }] },
+    { category: '工矿仓储用地', region: '高明区/更合镇/更楼社区', title: '吉岗山塘尾1号地块、临时建筑出租', image: '/assets/transaction/transaction-04.jpg', details: [{ label: '权属单位', value: '佛山市高明区更合镇更楼社区吉岗组集体经济组织' }, { label: '交易底价', value: '15000.00元/宗/年' }, { label: '报名时间', value: '2026-08-26 12:00 - 2027-08-26 12:00' }, { label: '竞投时间', value: '2026-09-03 09:00' }] },
+    { category: '仓库', region: '禅城区/石湾镇街道/沙岗村', title: '沙岗村新路146号二楼仓库出租', image: '/assets/transaction/transaction-05.jpg', details: [{ label: '权属单位', value: '佛山市禅城区石湾镇街道沙岗村沙岗组集体经济组织' }, { label: '交易底价', value: '2750.40元/宗/半年' }, { label: '报名时间', value: '2026-08-25 17:30 - 2026-08-28 17:30' }, { label: '竞投时间', value: '2026-08-31 09:15' }] },
+    { category: '仓库', region: '禅城区/石湾镇街道/沙岗村', title: '沙岗村厚龙路140号二楼仓库出租', image: '/assets/transaction/transaction-06.jpg', details: [{ label: '权属单位', value: '佛山市禅城区石湾镇街道沙岗村沙岗组集体经济组织' }, { label: '交易底价', value: '2100.00元/宗/半年' }, { label: '报名时间', value: '2026-08-25 17:30 - 2026-08-28 17:30' }, { label: '竞投时间', value: '2026-08-31 09:15' }] },
+  ],
+  结果公示: [
+    { category: '综合楼', region: '南海区/桂城街道/夏东社区', title: '孔溪创展大楼综合楼出租', image: '/assets/transaction/transaction-07.jpg', details: [{ label: '竞得人', value: '佘周兴' }, { label: '成交金额', value: '47000元/宗/月' }, { label: '公示开始', value: '2026-08-26' }, { label: '公示结束', value: '2026-08-28' }] },
+    { category: '商铺', region: '南海区/桂城街道/平东社区', title: '玉器大楼C28铺出租', image: '/assets/transaction/transaction-08.jpg', details: [{ label: '竞得人', value: '林声添' }, { label: '成交金额', value: '19000元/宗/月' }, { label: '公示开始', value: '2026-08-26' }, { label: '公示结束', value: '2026-08-28' }] },
+    { category: '商铺', region: '南海区/大沥镇/六联社区', title: '北村公路南二段之西庙后7号铺出租', image: '/assets/transaction/transaction-09.jpg', details: [{ label: '竞得人', value: '吕明强' }, { label: '成交金额', value: '3939.18元/宗/月' }, { label: '公示开始', value: '2026-08-26' }, { label: '公示结束', value: '2026-08-28' }] },
+    { category: '商铺', region: '南海区/大沥镇/六联社区', title: '北村公路南二段之西庙后10号铺出租', image: '/assets/transaction/transaction-10.jpg', details: [{ label: '竞得人', value: '黄洲发' }, { label: '成交金额', value: '5464.78元/宗/月' }, { label: '公示开始', value: '2026-08-26' }, { label: '公示结束', value: '2026-08-28' }] },
+    { category: '商铺', region: '南海区/大沥镇/六联社区', title: '北村公路南二段之西庙后9号铺出租', image: '/assets/transaction/transaction-11.jpg', details: [{ label: '竞得人', value: '王广峰' }, { label: '成交金额', value: '3989.18元/宗/月' }, { label: '公示开始', value: '2026-08-26' }, { label: '公示结束', value: '2026-08-28' }] },
+    { category: '商铺', region: '南海区/大沥镇/六联社区', title: '北村公路南二段之西庙后5号铺出租', image: '/assets/transaction/transaction-12.jpg', details: [{ label: '竞得人', value: '肖浩涛' }, { label: '成交金额', value: '7878.24元/宗/月' }, { label: '公示开始', value: '2026-08-26' }, { label: '公示结束', value: '2026-08-28' }] },
+  ],
+  成交公告: [
+    { category: '耕地', region: '禅城区/南庄镇/吉利村', title: '吉利农田区北四号塘（经营权）出租', image: '/assets/transaction/transaction-13.jpg', details: [{ label: '竞得人', value: '陆永良' }, { label: '成交金额', value: '2000元/亩/年' }, { label: '发布时间', value: '2026-08-25' }] },
+    { category: '综合楼和仓库', region: '禅城区/南庄镇/吉利村', title: '陶博大道东自编XJD14综合楼和陶博大道东便自编XJD15仓库出租', image: '/assets/transaction/transaction-14.jpg', details: [{ label: '竞得人', value: '黄红英' }, { label: '成交金额', value: '763560元/宗/年' }, { label: '发布时间', value: '2026-08-25' }] },
+    { category: '厂房', region: '禅城区/南庄镇/上元村', title: '上元开发区东区11座及露天场所出租', image: '/assets/transaction/transaction-15.jpg', details: [{ label: '竞得人', value: '羅鄧傑' }, { label: '成交金额', value: '15000元/宗/年' }, { label: '发布时间', value: '2026-08-25' }] },
+    { category: '商铺', region: '禅城区/南庄镇/紫南村', title: '紫南美食城小食街01号商铺出租', image: '/assets/transaction/transaction-16.jpg', details: [{ label: '竞得人', value: '黄球丽' }, { label: '成交金额', value: '2100元/宗/月' }, { label: '发布时间', value: '2026-08-25' }] },
+    { category: '商铺', region: '禅城区/南庄镇/紫南村', title: '紫南美食城小食街02号商铺出租', image: '/assets/transaction/transaction-17.jpg', details: [{ label: '竞得人', value: '黄球丽' }, { label: '成交金额', value: '2100元/宗/月' }, { label: '发布时间', value: '2026-08-25' }] },
+    { category: '商铺', region: '禅城区/南庄镇/紫南村', title: '紫南美食城小食街03号商铺出租', image: '/assets/transaction/transaction-18.jpg', details: [{ label: '竞得人', value: '陈土娣' }, { label: '成交金额', value: '2100元/宗/月' }, { label: '发布时间', value: '2026-08-25' }] },
+  ],
+  其他公告: [
+    { category: '楼房', region: '禅城区/南庄镇/杏头村', title: '苏滘1号楼出租', image: '/assets/transaction/transaction-19.jpg', details: [{ label: '权属单位', value: '佛山市禅城区南庄镇杏头村朝阳组集体经济组织' }, { label: '交易底价', value: '5800元/宗/年' }, { label: '发布时间', value: '2026-08-25' }] },
+    { category: '楼房', region: '禅城区/南庄镇/杏头村', title: '苏滘2号楼出租', image: '/assets/transaction/transaction-20.jpg', details: [{ label: '权属单位', value: '佛山市禅城区南庄镇杏头村朝阳组集体经济组织' }, { label: '交易底价', value: '38000元/宗/年' }, { label: '发布时间', value: '2026-08-25' }] },
+    { category: '耕地', region: '禅城区/南庄镇/醒群村', title: '醒群格庄村直佳塘鱼塘、基地（经营权）出租', image: '/assets/transaction/transaction-21.jpg', details: [{ label: '权属单位', value: '佛山市禅城区南庄镇醒群村格庄经济合作社' }, { label: '交易底价', value: '1500元/亩/年' }, { label: '发布时间', value: '2026-08-25' }] },
+    { category: '耕地', region: '禅城区/南庄镇/醒群村', title: '醒群格庄村1号塘鱼塘、基地（经营权）出租', image: '/assets/transaction/transaction-22.jpg', details: [{ label: '权属单位', value: '佛山市禅城区南庄镇醒群村格庄经济合作社' }, { label: '交易底价', value: '1500元/亩/年' }, { label: '发布时间', value: '2026-08-25' }] },
+    { category: '耕地', region: '禅城区/南庄镇/醒群村', title: '醒群格庄村3号塘鱼塘、基地（经营权）出租', image: '/assets/transaction/transaction-23.jpg', details: [{ label: '权属单位', value: '佛山市禅城区南庄镇醒群村格庄经济合作社' }, { label: '交易底价', value: '1500元/亩/年' }, { label: '发布时间', value: '2026-08-25' }] },
+    { category: '耕地', region: '禅城区/南庄镇/醒群村', title: '醒群格庄村风车塘鱼塘、基地（经营权）出租', image: '/assets/transaction/transaction-24.jpg', details: [{ label: '权属单位', value: '佛山市禅城区南庄镇醒群村格庄经济合作社' }, { label: '交易底价', value: '2500元/亩/年' }, { label: '发布时间', value: '2026-08-25' }] },
+  ],
+}
+
 const businessSections = [
   {
     sectionId: 'transaction',
     titleLead: '交易',
     titleRest: '动态',
     tabs: ['交易公告', '结果公示', '成交公告', '其他公告'],
+    transactionRecords: transactionAssetRecords,
     categories: [
       { label: '商铺', glyph: '铺', color: '#ff6f4c' },
       { label: '厂房', glyph: '厂', color: '#3bd950' },

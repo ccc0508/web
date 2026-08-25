@@ -13,6 +13,12 @@ interface DistrictItem {
   color: string
 }
 
+interface ProjectRecord {
+  name: string
+  region: string
+  date: string
+}
+
 const props = withDefaults(
   defineProps<{
     sectionId: string
@@ -21,17 +27,20 @@ const props = withDefaults(
     tabs?: string[]
     categories?: CategoryItem[]
     districts?: DistrictItem[]
+    records?: Record<string, ProjectRecord[]>
   }>(),
   {
     tabs: () => [],
     categories: () => [],
     districts: () => [],
+    records: () => ({}),
   },
 )
 
 const initialControl = props.tabs[0] ?? props.districts[0]?.label ?? props.categories[0]?.label ?? ''
 const activeControl = ref(initialControl)
 const fullTitle = computed(() => `${props.titleLead}${props.titleRest}`)
+const activeRecords = computed(() => props.records[activeControl.value] ?? [])
 const categoryOffset = ref(0)
 const categoryDirection = ref<'next' | 'previous'>('next')
 const visibleCategoryCount = computed(() => Math.min(7, props.categories.length))
@@ -150,7 +159,27 @@ const slideCategories = (step: -1 | 1) => {
       </button>
     </div>
 
-    <div class="business-section__empty">
+    <div v-if="activeRecords.length" class="business-section__records" aria-live="polite">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">项目名称</th>
+            <th scope="col">所属地区</th>
+            <th scope="col">发布日期</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="record in activeRecords" :key="`${record.name}-${record.date}`">
+            <td>{{ record.name }}</td>
+            <td>{{ record.region }}</td>
+            <td>{{ record.date }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <span class="business-section__view-more">查看更多&gt;</span>
+    </div>
+
+    <div v-else class="business-section__empty">
       <EmptyState />
     </div>
   </article>
@@ -430,6 +459,66 @@ const slideCategories = (step: -1 | 1) => {
     :deep(.empty-state) {
       min-height: 155px;
     }
+  }
+
+  &__records {
+    padding: 0 34px 24px;
+    border-top: 1px solid #f0ebe8;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      color: #14110f;
+      font-size: 15px;
+    }
+
+    th,
+    td {
+      height: 48px;
+      padding: 0 12px;
+      border-right: 1px solid #fff;
+      border-bottom: 1px solid #e8e8e8;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      height: 50px;
+      background: #f7f7f7;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    th:first-child,
+    td:first-child {
+      width: 51%;
+    }
+
+    th:nth-child(2),
+    td:nth-child(2) {
+      width: 27%;
+    }
+
+    th:last-child,
+    td:last-child {
+      width: 22%;
+      text-align: center;
+    }
+
+    tbody tr {
+      cursor: default;
+    }
+  }
+
+  &__view-more {
+    display: block;
+    margin-top: 12px;
+    color: #817b77;
+    font-size: 14px;
+    text-align: center;
+    cursor: default;
   }
 }
 

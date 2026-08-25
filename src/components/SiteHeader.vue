@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 
 type HeaderMode = 'home' | 'trade-hall'
 
@@ -44,7 +44,12 @@ const goToProjectMap = () => router.push('/project-map')
     <div class="welcome-bar">
       <div class="site-container welcome-bar__inner">
         <span>{{ headerCopy.welcome }}</span>
-        <span data-testid="welcome-date">{{ dateText }}</span>
+        <div class="welcome-bar__actions">
+          <span data-testid="welcome-date">{{ dateText }}</span>
+          <RouterLink class="welcome-bar__complaint" to="/supervision-complaint">
+            监督投诉
+          </RouterLink>
+        </div>
       </div>
     </div>
 
@@ -107,6 +112,36 @@ const goToProjectMap = () => router.push('/project-map')
     align-items: center;
     justify-content: space-between;
     height: 100%;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    height: 100%;
+  }
+
+  &__complaint {
+    position: relative;
+    color: #302c2a;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+
+    &::before {
+      position: absolute;
+      top: 50%;
+      left: -10px;
+      width: 1px;
+      height: 14px;
+      content: '';
+      background: #d6d0cc;
+      transform: translateY(-50%);
+    }
+
+    &:hover {
+      color: var(--brand-red);
+    }
   }
 }
 

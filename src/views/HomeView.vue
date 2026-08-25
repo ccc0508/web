@@ -38,6 +38,41 @@ const ruralProjectRecords = {
   ],
 }
 
+const expiringAssetRecords = {
+  一年内到期: [
+    { category: '市场', region: '禅城区/祖庙街道/永新村', title: '忠义路永新服装市场', owner: '佛山市禅城区祖庙街道永新村集体经济组织', area: '1094.05平方米', address: '佛山市禅城区祖庙街道永新村忠义路永新服装市场', expiryDate: '2027-08-26', image: '/assets/expiring/expiry-01.jpg' },
+    { category: '商铺', region: '禅城区/张槎街道/弼唐村', title: '弼唐东二街12号之南11号商铺', owner: '佛山市禅城区张槎街道弼唐村弼兴股份经济合作社', area: '34平方米', address: '佛山市禅城区张槎街道弼唐村弼唐东二街12号之南11号商铺', expiryDate: '2027-08-26', image: '/assets/expiring/expiry-02.jpg' },
+    { category: '厂房', region: '禅城区/张槎街道/村尾村', title: '村尾南区联和工业区1号楼首层之三', owner: '佛山市禅城区张槎街道村尾村南区组集体经济组织', area: '177平方米', address: '佛山市禅城区张槎街道村尾南区联和工业区1号楼首层之三厂房', expiryDate: '2027-08-26', image: '/assets/expiring/expiry-03.jpg' },
+    { category: '厂房', region: '禅城区/张槎街道/村尾村', title: '村尾南区联和工业区2号楼2楼之二', owner: '佛山市禅城区张槎街道村尾村南区组集体经济组织', area: '1288平方米', address: '佛山市禅城区张槎街道村尾南区联和工业区2号楼2楼之二', expiryDate: '2027-08-26', image: '/assets/expiring/expiry-04.jpg' },
+    { category: '商铺', region: '禅城区/祖庙街道/镇安村', title: '镇安村中一九亩工业区2号115商铺', owner: '佛山市禅城区祖庙街道镇安村中一股份经济合作社', area: '30平方米', address: '佛山市禅城区祖庙街道镇安村中一九亩工业区2号115商铺', expiryDate: '2027-08-26', image: '/assets/expiring/expiry-05.jpg' },
+    { category: '耕地', region: '南海区/狮山镇/联表社区', title: '联表社区联表东股份经济合作社“朱斗脚”农田6号地', owner: '佛山市南海区狮山镇联表社区联表东股份经济合作社', area: '4.37亩', address: '狮山镇联表村联表东经济社土名“朱斗脚”地段。', expiryDate: '2027-08-25', image: '/assets/expiring/expiry-06.jpg' },
+  ],
+  '6个月内到期': [
+    { category: '仓库', region: '禅城区/南庄镇/东村村', title: '东村工业C区07号-下东东鹤咀塘东面土地仓库', owner: '佛山市禅城区南庄镇东村集团有限公司', area: '6761.78平方米', address: '佛山市禅城区南庄镇迎凤路以北，东村物业仓23座以东', expiryDate: '2027-02-26', image: '/assets/expiring/expiry-07.jpg' },
+    { category: '商铺', region: '禅城区/石湾镇街道/沙岗村', title: '沙岗村石塘前士多店10号商铺', owner: '佛山市禅城区石湾镇街道沙岗村沙岗组集体经济组织', area: '20平方米', address: '佛山市禅城区石湾镇街道沙岗村石塘前士多店10号商铺', expiryDate: '2027-02-26', image: '/assets/expiring/expiry-08.jpg' },
+    { category: '厂房', region: '高明区/杨和镇/岗水村', title: '独岗南庄围8-1号厂房', owner: '佛山市高明区杨和镇独岗股份经济合作社', area: '5500平方米', address: '佛山市高明区杨和镇独岗工业区南庄围8号', expiryDate: '2027-02-25', image: '/assets/expiring/expiry-09.jpg' },
+    { category: '养殖水面（坑塘水面）', region: '高明区/荷城街道/范洲村', title: '坑边村竹仔脚下碑和上碑2号鱼塘', owner: '佛山市高明区荷城街道坑边股份经济合作社', area: '17.9533亩', address: '佛山市高明区荷城街道坑边村西出口路边鱼塘', expiryDate: '2027-02-25', image: '/assets/expiring/expiry-10.jpg' },
+    { category: '养殖水面（坑塘水面）', region: '南海区/狮山镇/下柏社区', title: '狮山镇下柏社区下柏经济联合社灯妹塘鱼塘', owner: '广东省佛山市南海区狮山镇下柏社区集体经济组织', area: '3亩', address: '佛山市南海区狮山镇下柏社区下柏经济联合社岑边村东南侧鱼塘之五', expiryDate: '2027-02-25', image: '/assets/expiring/expiry-11.jpg' },
+    { category: '养殖水面（坑塘水面）', region: '南海区/狮山镇/下柏社区', title: '狮山镇下柏社区下柏经济联合社岑坚塘鱼塘', owner: '广东省佛山市南海区狮山镇下柏社区集体经济组织', area: '4亩', address: '佛山市南海区狮山镇下柏社区下柏经济联合社岑边村东南侧鱼塘之四', expiryDate: '2027-02-25', image: '/assets/expiring/expiry-12.jpg' },
+  ],
+  '3个月内到期': [
+    { category: '交通运输和水利设施用地', region: '顺德区/容桂街道/南区社区', title: '聚龙片停车位43号', owner: '佛山市顺德区容桂街道南区股份经济合作联合社', area: '0.015亩', address: '容桂街道南区社区聚龙小区', expiryDate: '2026-11-26', image: '/assets/expiring/expiry-13.jpg' },
+    { category: '商铺', region: '南海区/大沥镇/平地社区', title: '华村大道(旧纸箱厂)5号铺', owner: '广东省佛山市南海区大沥镇平地社区华村组集体经济组织', area: '72平方米', address: '佛山市南海区大沥镇平地华村大道(旧纸箱厂)', expiryDate: '2026-11-26', image: '/assets/expiring/expiry-14.jpg' },
+    { category: '商铺', region: '南海区/大沥镇/平地社区', title: '华村大道(旧纸箱厂)6号铺', owner: '广东省佛山市南海区大沥镇平地社区华村组集体经济组织', area: '72平方米', address: '佛山市南海区大沥镇平地华村大道(旧纸箱厂)', expiryDate: '2026-11-26', image: '/assets/expiring/expiry-15.jpg' },
+    { category: '厂房', region: '禅城区/张槎街道/村尾村', title: '村尾顺景工业区1305号之一厂房', owner: '佛山市禅城区张槎街道村尾村中一组集体经济组织', area: '248平方米', address: '广东省佛山市禅城区张槎街道村尾顺景工业区1305号之一厂房', expiryDate: '2026-11-26', image: '/assets/expiring/expiry-16.jpg' },
+    { category: '其他物业', region: '南海区/九江镇/河清社区', title: '三村基站（思恩亭侧杂地）', owner: '广东省佛山市南海区九江镇河清社区三村组集体经济组织', area: '50平方米', address: '佛山市南海区九江镇河清社区三村九曲巷140号侧三村基站（思恩亭侧杂地）', expiryDate: '2026-11-25', image: '/assets/expiring/expiry-17.jpg' },
+    { category: '交通运输和水利设施用地', region: '顺德区/容桂街道/南区社区', title: '聚龙片停车位45号', owner: '佛山市顺德区容桂街道南区股份经济合作联合社', area: '0.015亩', address: '容桂街道南区社区聚龙小区', expiryDate: '2026-11-25', image: '/assets/expiring/expiry-18.jpg' },
+  ],
+  '1个月内到期': [
+    { category: '商铺', region: '禅城区/石湾镇街道/沙岗村', title: '沙岗村孖山仔6号之1商铺', owner: '佛山市禅城区石湾镇街道沙岗村沙岗组集体经济组织', area: '96平方米', address: '佛山市禅城区石湾镇街道沙岗村孖山仔5-6号仓库', expiryDate: '2026-09-26', image: '/assets/expiring/expiry-19.jpg' },
+    { category: '商服用地', region: '顺德区/乐从镇/良教村', title: '良教村乐从大道南良教段地块一', owner: '广东省佛山市顺德区乐从镇良教股份合作经济社', area: '55.44亩', address: '广东省佛山市顺德区乐从镇乐从大道良教路段南侧', expiryDate: '2026-09-26', image: '/assets/expiring/expiry-20.jpg' },
+    { category: '商铺', region: '禅城区/石湾镇街道/河宕村', title: '河宕东一村建源路38栋B座1号商铺', owner: '佛山市禅城区石湾镇街道河宕村东一股份经济合作社', area: '77平方米', address: '佛山市禅城区石湾镇街道河宕东一村建源路38栋B座1号', expiryDate: '2026-09-26', image: '/assets/expiring/expiry-21.jpg' },
+    { category: '商铺', region: '禅城区/石湾镇街道/沙岗村', title: '沙岗村孖山仔3-4号商铺', owner: '佛山市禅城区石湾镇街道沙岗村沙岗组集体经济组织', area: '384平方米', address: '佛山市禅城区石湾镇街道沙岗村孖山仔3-4号仓库', expiryDate: '2026-09-26', image: '/assets/expiring/expiry-22.jpg' },
+    { category: '商铺', region: '禅城区/石湾镇街道/沙岗村', title: '沙岗村孖山仔5号之1商铺', owner: '佛山市禅城区石湾镇街道沙岗村沙岗组集体经济组织', area: '96平方米', address: '佛山市禅城区石湾镇街道沙岗村孖山仔5-6号仓库', expiryDate: '2026-09-26', image: '/assets/expiring/expiry-23.jpg' },
+    { category: '商服用地', region: '顺德区/乐从镇/良教村', title: '良教村乐从大道南良教段地块二', owner: '广东省佛山市顺德区乐从镇良教股份合作经济社', area: '59.04亩', address: '广东省佛山市顺德区乐从镇乐从大道良教路段南侧', expiryDate: '2026-09-26', image: '/assets/expiring/expiry-24.jpg' },
+  ],
+}
+
 const businessSections = [
   {
     sectionId: 'transaction',
@@ -62,6 +97,7 @@ const businessSections = [
     titleLead: '临期',
     titleRest: '资产',
     tabs: ['一年内到期', '6个月内到期', '3个月内到期', '1个月内到期'],
+    assetRecords: expiringAssetRecords,
     categories: [
       { label: '林地', glyph: '林', color: '#ff6d4a' },
       { label: '草地', glyph: '草', color: '#38d64a' },

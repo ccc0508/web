@@ -19,6 +19,17 @@ interface ProjectRecord {
   date: string
 }
 
+interface ExpiringAssetRecord {
+  category: string
+  region: string
+  title: string
+  owner: string
+  area: string
+  address: string
+  expiryDate: string
+  image: string
+}
+
 const props = withDefaults(
   defineProps<{
     sectionId: string
@@ -28,12 +39,14 @@ const props = withDefaults(
     categories?: CategoryItem[]
     districts?: DistrictItem[]
     records?: Record<string, ProjectRecord[]>
+    assetRecords?: Record<string, ExpiringAssetRecord[]>
   }>(),
   {
     tabs: () => [],
     categories: () => [],
     districts: () => [],
     records: () => ({}),
+    assetRecords: () => ({}),
   },
 )
 
@@ -41,6 +54,8 @@ const initialControl = props.tabs[0] ?? props.districts[0]?.label ?? props.categ
 const activeControl = ref(initialControl)
 const fullTitle = computed(() => `${props.titleLead}${props.titleRest}`)
 const activeRecords = computed(() => props.records[activeControl.value] ?? [])
+const activeAssetRecords = computed(() => props.assetRecords[activeControl.value] ?? [])
+const hasAssetRecords = computed(() => Object.keys(props.assetRecords).length > 0)
 const categoryOffset = ref(0)
 const categoryDirection = ref<'next' | 'previous'>('next')
 const visibleCategoryCount = computed(() => Math.min(7, props.categories.length))
@@ -119,6 +134,7 @@ const slideCategories = (step: -1 | 1) => {
               :key="category.label"
               :aria-pressed="activeControl === category.label"
               class="business-section__category"
+              :disabled="hasAssetRecords"
               :data-testid="`${sectionId}-category-${category.label}`"
               :style="{ '--category-color': category.color }"
               type="button"
@@ -159,7 +175,30 @@ const slideCategories = (step: -1 | 1) => {
       </button>
     </div>
 
-    <div v-if="activeRecords.length" class="business-section__records" aria-live="polite">
+    <div v-if="activeAssetRecords.length" class="business-section__asset-grid" aria-live="polite">
+      <article
+        v-for="asset in activeAssetRecords"
+        :key="`${asset.title}-${asset.expiryDate}`"
+        class="business-section__asset-card"
+      >
+        <div class="business-section__asset-media">
+          <img :alt="asset.title" :src="asset.image" loading="lazy" />
+          <span>{{ asset.region }}</span>
+        </div>
+        <p class="business-section__asset-category">{{ asset.category }}</p>
+        <div class="business-section__asset-body">
+          <h3>{{ asset.title }}</h3>
+          <p><strong>权属单位：</strong><span>{{ asset.owner }}</span></p>
+          <p><strong>占地面积：</strong><span>{{ asset.area }}</span></p>
+          <p><strong>资产地址：</strong><span>{{ asset.address }}</span></p>
+        </div>
+        <p class="business-section__asset-expiry">
+          <strong>合同到期时间：</strong>{{ asset.expiryDate }}
+        </p>
+      </article>
+    </div>
+
+    <div v-else-if="activeRecords.length" class="business-section__records" aria-live="polite">
       <table>
         <thead>
           <tr>
@@ -337,6 +376,11 @@ const slideCategories = (step: -1 | 1) => {
     cursor: pointer;
     background: transparent;
 
+    &:disabled {
+      cursor: default;
+      opacity: 1;
+    }
+
     em {
       max-width: 118px;
       margin-top: 9px;
@@ -512,6 +556,106 @@ const slideCategories = (step: -1 | 1) => {
     }
   }
 
+  &__asset-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    padding: 4px 34px 30px;
+  }
+
+  &__asset-card {
+    min-width: 0;
+    overflow: hidden;
+    color: #171412;
+    background: #fff;
+    border: 1px solid #d9d6d3;
+  }
+
+  &__asset-media {
+    position: relative;
+    height: 235px;
+    overflow: hidden;
+    background: #eee;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    span {
+      position: absolute;
+      top: 12px;
+      left: 10px;
+      max-width: calc(100% - 20px);
+      padding: 4px 7px;
+      overflow: hidden;
+      color: #fff;
+      background: #f0332c;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: 700;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  &__asset-category {
+    height: 36px;
+    padding: 0 18px;
+    margin: 0;
+    color: #24201d;
+    background: #f7f7f7;
+    font-size: 14px;
+    line-height: 36px;
+  }
+
+  &__asset-body {
+    min-height: 134px;
+    padding: 12px 18px 10px;
+
+    h3 {
+      margin: 0 0 10px;
+      overflow: hidden;
+      font-size: 18px;
+      line-height: 1.35;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    p {
+      display: flex;
+      min-width: 0;
+      margin: 5px 0;
+      font-size: 13px;
+      line-height: 1.35;
+
+      strong {
+        flex: 0 0 auto;
+        font-weight: 400;
+      }
+
+      span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  &__asset-expiry {
+    padding: 13px 18px;
+    margin: 0;
+    border-top: 1px solid #e5e2df;
+    font-size: 13px;
+
+    strong {
+      font-weight: 400;
+    }
+  }
+
   &__view-more {
     display: block;
     margin-top: 12px;
@@ -557,6 +701,21 @@ const slideCategories = (step: -1 | 1) => {
     &__category em {
       font-size: 14px;
     }
+
+    &__asset-grid {
+      gap: 15px;
+      padding-inline: 22px;
+    }
+
+    &__asset-media {
+      height: 210px;
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .business-section__asset-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>

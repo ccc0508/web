@@ -55,18 +55,6 @@ import SiteHeader from '../components/SiteHeader.vue'
           </div>
         </article>
 
-        <aside class="complaint-sidebar" aria-label="相关栏目">
-          <nav class="complaint-sidebar__nav">
-            <span>关于我们 <i aria-hidden="true">›</i></span>
-            <span>里程碑事件 <i aria-hidden="true">›</i></span>
-            <span class="is-active">监督投诉 <i aria-hidden="true">›</i></span>
-          </nav>
-          <div class="complaint-sidebar__service">
-            <small>政务服务入口</small>
-            <img alt="法护乡资" src="/assets/fahu-xiangzi-logo.png" />
-            <strong>广东三资</strong>
-          </div>
-        </aside>
       </div>
     </main>
 
@@ -133,75 +121,9 @@ import SiteHeader from '../components/SiteHeader.vue'
   }
 
   &__body {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 230px;
-    gap: 28px;
     width: 1200px;
     min-height: 600px;
     padding: 30px 0 54px;
-  }
-}
-
-.complaint-sidebar {
-  padding-top: 0;
-
-  &__nav {
-    display: grid;
-    gap: 10px;
-
-    span {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 48px;
-      padding: 0 20px;
-      color: #403a36;
-      background: #fff5df;
-      border-left: 4px solid #e1dedb;
-      border-radius: 0 6px 6px 0;
-      font-size: 16px;
-      font-weight: 700;
-
-      &.is-active {
-        color: #fff;
-        background: linear-gradient(90deg, #f13727, #e52b21);
-        border-left-color: #f4ad16;
-      }
-
-      i {
-        color: #cfc5bc;
-        font-size: 22px;
-        font-style: normal;
-      }
-    }
-  }
-
-  &__service {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 24px;
-    padding: 16px 12px 18px;
-    background: #fff;
-    border: 1px solid #eee7e2;
-
-    small {
-      align-self: flex-start;
-      color: #6f6863;
-      font-size: 13px;
-    }
-
-    img {
-      width: 105px;
-      height: 105px;
-      margin: 12px 0 5px;
-      object-fit: contain;
-    }
-
-    strong {
-      color: #201d1b;
-      font-size: 18px;
-    }
   }
 }
 

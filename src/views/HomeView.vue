@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue'
 import BackToTop from '../components/BackToTop.vue'
 import BusinessDataSection from '../components/BusinessDataSection.vue'
 import InformationTabs from '../components/InformationTabs.vue'
@@ -6,6 +7,31 @@ import PrimaryNav from '../components/PrimaryNav.vue'
 import SectionHeader from '../components/SectionHeader.vue'
 import SiteHeader from '../components/SiteHeader.vue'
 import VideoPlaceholder from '../components/VideoPlaceholder.vue'
+
+const carouselSlides = [
+  { image: '/assets/carousel/carousel-01.jpg', title: '全省率先！佛山出台若干举措推进乡村运营' },
+  { image: '/assets/carousel/carousel-02.jpg', title: '疾风骤雨，南海全域整治拦不住！' },
+  { image: '/assets/carousel/carousel-03.jpg', title: '90个！佛山亿元村居再扩容' },
+  { image: '/assets/carousel/carousel-04.jpg', title: '紧扣“六活”思路，南海农村改革助力“百千万”，增长看得见' },
+  { image: '/assets/carousel/carousel-05.jpg', title: '农村集体“三资”智慧云管理平台入围农业农村大数据应用软件系统征集成果发布名单 获全国推广' },
+]
+
+const activeCarouselIndex = ref(0)
+let carouselTimer: ReturnType<typeof setInterval> | undefined
+
+const selectCarouselSlide = (index: number) => {
+  activeCarouselIndex.value = index
+}
+
+onMounted(() => {
+  carouselTimer = setInterval(() => {
+    activeCarouselIndex.value = (activeCarouselIndex.value + 1) % carouselSlides.length
+  }, 5000)
+})
+
+onUnmounted(() => {
+  if (carouselTimer) clearInterval(carouselTimer)
+})
 
 const ruralProjectRecords = {
   交易公告: [
@@ -227,15 +253,28 @@ const websiteLinks = [
 
           <article class="portal-card carousel-card" aria-label="首页轮播图">
             <div class="carousel-card__media">
-              <img alt="首页轮播占位图" src="/assets/carousel-placeholder.jpg" />
+              <Transition name="carousel-fade">
+                <img
+                  :key="carouselSlides[activeCarouselIndex].image"
+                  :alt="carouselSlides[activeCarouselIndex].title"
+                  :src="carouselSlides[activeCarouselIndex].image"
+                />
+              </Transition>
               <div class="carousel-card__shade"></div>
               <div class="carousel-card__caption">
-                <span>数字乡村</span>
-                <strong>科技赋能乡村振兴</strong>
-                <p>汇聚集体资源，助力美好乡村建设</p>
+                <span>乡村振兴</span>
+                <strong>{{ carouselSlides[activeCarouselIndex].title }}</strong>
               </div>
-              <div class="carousel-card__dots" aria-label="轮播图第 1 张，共 3 张">
-                <i class="is-active"></i><i></i><i></i>
+              <div class="carousel-card__dots" :aria-label="`轮播图第 ${activeCarouselIndex + 1} 张，共 ${carouselSlides.length} 张`">
+                <button
+                  v-for="(slide, index) in carouselSlides"
+                  :key="slide.image"
+                  :aria-label="`显示第 ${index + 1} 张轮播图`"
+                  :aria-pressed="activeCarouselIndex === index"
+                  :class="{ 'is-active': activeCarouselIndex === index }"
+                  type="button"
+                  @click="selectCarouselSlide(index)"
+                ></button>
               </div>
             </div>
           </article>
@@ -406,6 +445,8 @@ const websiteLinks = [
     background: #bbb;
 
     img {
+      position: absolute;
+      inset: 0;
       display: block;
       width: 100%;
       height: 100%;
@@ -449,11 +490,6 @@ const websiteLinks = [
       letter-spacing: 0.08em;
     }
 
-    p {
-      margin: 6px 0 0;
-      font-size: 14px;
-      letter-spacing: 0.12em;
-    }
   }
 
   &__dots {
@@ -463,11 +499,14 @@ const websiteLinks = [
     display: flex;
     gap: 8px;
 
-    i {
+    button {
       width: 8px;
       height: 8px;
+      padding: 0;
+      cursor: pointer;
       background: rgb(255 255 255 / 60%);
       border-radius: 50%;
+      transition: width 180ms ease, background 180ms ease;
 
       &.is-active {
         width: 25px;
@@ -583,6 +622,16 @@ const websiteLinks = [
       outline: 3px solid #b9151d;
       outline-offset: 3px;
     }
+  }
+
+  .carousel-fade-enter-active,
+  .carousel-fade-leave-active {
+    transition: opacity 400ms ease;
+  }
+
+  .carousel-fade-enter-from,
+  .carousel-fade-leave-to {
+    opacity: 0;
   }
 }
 

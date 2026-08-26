@@ -24,6 +24,7 @@ import ProjectMapFilterBar from '../components/ProjectMapFilterBar.vue'
 import ProjectMapResults from '../components/ProjectMapResults.vue'
 import RegionSelectModal from '../components/RegionSelectModal.vue'
 import {
+  guangdongCityMarkers,
   guangdongMapCenter,
   guangdongMapZoom,
   projectMapMaxNativeZoom,
@@ -34,6 +35,9 @@ import {
 const mapContainer = ref<HTMLElement>()
 let map: L.Map | null = null
 let mapResizeObserver: ResizeObserver | null = null
+const cityProjectCounts = new Map(
+  guangdongCityMarkers.map((city) => [city.name, Math.floor(Math.random() * 9001) + 1000]),
+)
 
 onMounted(() => {
   if (!mapContainer.value) return
@@ -41,6 +45,7 @@ onMounted(() => {
   map = L.map(mapContainer.value, {
     center: guangdongMapCenter,
     zoom: guangdongMapZoom,
+    zoomSnap: 0.25,
     maxZoom: projectMapMaxZoom,
     zoomControl: true,
     scrollWheelZoom: true,
@@ -57,6 +62,33 @@ onMounted(() => {
     maxNativeZoom: projectMapMaxNativeZoom,
     maxZoom: projectMapMaxZoom,
   }).addTo(map)
+
+  guangdongCityMarkers.forEach((city) => {
+    const count = cityProjectCounts.get(city.name) ?? 1000
+    const shortName = city.name.replace(/市$/, '')
+    const cityIcon = L.divIcon({
+      className: 'map-city-marker-icon',
+      html: `
+        <div class="map-city-marker">
+          <div class="map-city-marker__bubble">
+            <span>${shortName}</span>
+            <strong>${count}</strong>
+          </div>
+          <div class="map-city-marker__footer">${city.name}</div>
+        </div>
+      `,
+      iconSize: [68, 58],
+      iconAnchor: [34, 55],
+    })
+
+    L.marker(city.coordinates, {
+      icon: cityIcon,
+      interactive: false,
+      keyboard: false,
+      title: `${city.name} ${count}`,
+      alt: `${city.name}项目数量${count}`,
+    }).addTo(map!)
+  })
 
   // 修复 Leaflet 在 flex 布局中初次渲染尺寸不正确的问题
   setTimeout(() => map?.invalidateSize(), 200)
@@ -193,5 +225,71 @@ const handleRegionConfirm = (region: string) => {
 
 :deep(.leaflet-control-attribution) {
   font-size: 11px;
+}
+
+:deep(.map-city-marker-icon) {
+  background: transparent;
+  border: 0;
+}
+
+:deep(.map-city-marker) {
+  display: flex;
+  width: 68px;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 4px 6px rgb(32 72 121 / 25%));
+  pointer-events: none;
+  transform: translateY(-3px);
+}
+
+:deep(.map-city-marker__bubble) {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-width: 64px;
+  height: 40px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: linear-gradient(180deg, #2389ed, #0876dc);
+  border-radius: 5px;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 24%);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+:deep(.map-city-marker__bubble::after) {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  content: '';
+  background: #0876dc;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+:deep(.map-city-marker__bubble strong) {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+:deep(.map-city-marker__footer) {
+  position: relative;
+  z-index: 2;
+  max-width: 62px;
+  padding: 2px 6px;
+  margin-top: 5px;
+  overflow: hidden;
+  color: #fff;
+  background: rgb(173 103 38 / 90%);
+  border-radius: 0 0 3px 3px;
+  font-size: 10px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
